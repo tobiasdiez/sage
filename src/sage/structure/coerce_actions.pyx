@@ -781,7 +781,7 @@ cdef class IntegerMulAction(IntegerAction):
         Check that large multiplications can be interrupted::
 
             sage: # needs sage.schemes
-            sage: alarm(0.001); 2^(10^7) * P
+            sage: alarm(0.001); 2^(10^7) * P # known bug: macos, random failures, see #35973
             Traceback (most recent call last):
             ...
             AlarmInterrupt
