@@ -224,7 +224,7 @@ dependencies:
   - fpylll=0.6.1=py311hcfae7cf_0
   - giac=1.9.0.21=h673759e_1
   - igraph=0.10.10=h153f77b_0
-  - ipython=8.21.0=pyh707e725_0
+  - ipython=8.22.0=pyh707e725_0
   - jupyter_client=8.6.0=pyhd8ed1ab_0
   - linbox=1.6.3=ha329b40_8
   - scipy=1.11.4=py311h64a7726_0
