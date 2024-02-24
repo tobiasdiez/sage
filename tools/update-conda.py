@@ -81,6 +81,14 @@ def get_dependencies(pyproject_toml: Path) -> list[str]:
 
     # Correct pypi name for some packages
     python_requirements = pyproject_metadata.get("install_requires", [])
+    # Specify concrete packages for some packages not yet in grayskull
+    # TODO: It seems to be a bug that these external.dependencies are added to install_requires by grayskull
+    python_requirements.remove("pkg:generic/tachyon")
+    python_requirements.append("tachyon")
+    python_requirements.remove("pkg:generic/sagemath-elliptic-curves")
+    python_requirements.append("sagemath-db-elliptic-curves")
+    python_requirements.remove("pkg:generic/sagemath-polytopes-db")
+    python_requirements.append("sagemath-db-polytopes")
     # Following can be removed once https://github.com/regro/cf-scripts/pull/2176 is used in grayskull
     python_requirements = [req.replace("lrcalc", "python-lrcalc") for req in python_requirements]
     all_requirements += normalize_requirements_list(python_requirements, graystull_config)
