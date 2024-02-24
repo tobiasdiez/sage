@@ -69,7 +69,7 @@ def get_dependencies(pyproject_toml: Path) -> list[str]:
     graystull_config = Configuration("sagemath")
     pyproject_metadata = merge_setup_toml_metadata({}, get_all_toml_info(pyproject_toml))
     requirements = extract_requirements(pyproject_metadata, graystull_config, {})
-    all_requirements = requirements.get("build", []) + requirements.get("host", []) + requirements.get("run", []) + pyproject_metadata.get("install_requires", [])
+    all_requirements = requirements.get("build", []) + requirements.get("host", []) + requirements.get("run", [])
 
     # Specify concrete package for some virtual packages
     all_requirements.remove("{{ blas }}")
@@ -80,8 +80,12 @@ def get_dependencies(pyproject_toml: Path) -> list[str]:
     all_requirements.append("cxx-compiler")
 
     # Correct pypi name for some packages
-    all_requirements = normalize_requirements_list(all_requirements, graystull_config)
+    all_requirements += normalize_requirements_list(pyproject_metadata.get("install_requires", []), graystull_config)
     all_requirements.remove("<{ pin_compatible('numpy') }}")
+    # Following can be removed once https://github.com/regro/cf-scripts/pull/2176 is used in grayskull
+    if "lrcalc" in all_requirements:
+        all_requirements.remove("lrcalc")
+        all_requirements.append("lrcalc-python")
 
     # Add version constraints for some packages (not yet supported by grayskull/PEP 725)
     all_requirements.remove("c-compiler")
