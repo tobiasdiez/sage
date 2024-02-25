@@ -51,7 +51,7 @@ def update_conda(source_dir: Path) -> None:
         for python in pythons:
             for tag in tags:
                 # Pin Python version
-                pinned_dependencies = {f"python={python}" if dep.startswith("python") else dep for dep in dependencies}
+                pinned_dependencies = {f"python={python}" if dep == "python" else dep for dep in dependencies}
                 if tag == "-dev":
                     dev_dependencies = get_dev_dependencies(pyproject_toml)
                     print(f"Adding dev dependencies: {dev_dependencies}")
