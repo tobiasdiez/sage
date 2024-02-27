@@ -123,6 +123,8 @@ def get_dependencies(pyproject_toml: Path) -> list[str]:
     python_requirements.append("sagemath-db-elliptic-curves")
     python_requirements.remove("pkg:generic/sagemath-polytopes-db")
     python_requirements.append("sagemath-db-polytopes")
+    python_requirements.remove("pkg:generic/sagemath-graphs")
+    python_requirements.append("sagemath-db-graphs")
     # Following can be removed once https://github.com/regro/cf-scripts/pull/2176 is used in grayskull
     python_requirements = [
         req.replace("lrcalc", "python-lrcalc") for req in python_requirements
