@@ -381,7 +381,7 @@ class Modules(Category_module):
             """
             return self._with_axiom("FinitelyPresented")
 
-        @cached_method
+        #@cached_method
         def Filtered(self, base_ring=None):
             r"""
             Return the subcategory of the filtered objects of ``self``.

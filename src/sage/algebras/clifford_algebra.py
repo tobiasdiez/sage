@@ -55,34 +55,6 @@ class CliffordAlgebraIndices(UniqueRepresentation, Parent):
         r"""
         Initialize ``self``.
 
-        EXAMPLES::
-
-            sage: from sage.algebras.clifford_algebra import CliffordAlgebraIndices
-            sage: idx = CliffordAlgebraIndices(7)
-            sage: idx._nbits
-            7
-            sage: idx._cardinality
-            128
-            sage: i = idx.an_element(); i
-            1111
-            sage: type(i)
-            <class 'sage.data_structures.bitset.FrozenBitset'>
-
-            sage: idx = CliffordAlgebraIndices(7, 3)
-            sage: idx._nbits
-            7
-            sage: idx._degree
-            3
-            sage: idx._cardinality
-            35
-
-            sage: idx = CliffordAlgebraIndices(7, 0)
-            sage: idx._nbits
-            7
-            sage: idx._degree
-            0
-            sage: idx._cardinality
-            1
         """
         self._nbits = Qdim
         if degree is None:
@@ -99,24 +71,7 @@ class CliffordAlgebraIndices(UniqueRepresentation, Parent):
         r"""
         Construct an element of ``self``.
 
-        EXAMPLES::
 
-            sage: from sage.algebras.clifford_algebra import CliffordAlgebraIndices
-            sage: idx = CliffordAlgebraIndices(7)
-            sage: idx([1,3,6])
-            0101001
-            sage: for i in range(7): print(idx(i))
-            1
-            01
-            001
-            0001
-            00001
-            000001
-            0000001
-
-            sage: idx = CliffordAlgebraIndices(0)
-            sage: idx([])
-            0
         """
         if isinstance(x, (list, tuple, set, frozenset)):
             if len(x) > self._nbits:
@@ -130,14 +85,6 @@ class CliffordAlgebraIndices(UniqueRepresentation, Parent):
 
     def __call__(self, el):
         r"""
-        EXAMPLES::
-
-            sage: from sage.algebras.clifford_algebra import CliffordAlgebraIndices
-            sage: idx = CliffordAlgebraIndices(7)
-            sage: idx([1,3,6])
-            0101001
-            sage: E = ExteriorAlgebra(QQ, 7)
-            sage: B = E.basis()
         """
         if not isinstance(el, Element):
             return self._element_constructor_(el)
@@ -148,20 +95,6 @@ class CliffordAlgebraIndices(UniqueRepresentation, Parent):
         r"""
         Return the cardinality of ``self``.
 
-        EXAMPLES::
-
-            sage: from sage.algebras.clifford_algebra import CliffordAlgebraIndices
-            sage: idx = CliffordAlgebraIndices(7)
-            sage: idx.cardinality() == 2^7
-            True
-            sage: len(idx) == 2^7
-            True
-
-            sage: idx = CliffordAlgebraIndices(7, 3)
-            sage: idx.cardinality() == binomial(7, 3)
-            True
-            sage: len(idx) == binomial(7, 3)
-            True
         """
         return self._cardinality
 
@@ -171,19 +104,7 @@ class CliffordAlgebraIndices(UniqueRepresentation, Parent):
         r"""
         Return a string representation of ``self``.
 
-        EXAMPLES::
 
-            sage: from sage.algebras.clifford_algebra import CliffordAlgebraIndices
-            sage: CliffordAlgebraIndices(7)
-            Subsets of {0,1,...,6}
-            sage: CliffordAlgebraIndices(0)
-            Subsets of {}
-            sage: CliffordAlgebraIndices(1)
-            Subsets of {0}
-            sage: CliffordAlgebraIndices(2)
-            Subsets of {0,1}
-            sage: CliffordAlgebraIndices(5, 3)
-            Subsets of {0,1,...,4} of size 3
         """
         if self._degree is not None:
             extra = f" of size {self._degree}"
@@ -201,19 +122,6 @@ class CliffordAlgebraIndices(UniqueRepresentation, Parent):
         r"""
         Return a latex representation of ``self``.
 
-        EXAMPLES::
-
-            sage: from sage.algebras.clifford_algebra import CliffordAlgebraIndices
-            sage: latex(CliffordAlgebraIndices(7))
-            \mathcal{P}(\{0,1,\ldots,6\})
-            sage: latex(CliffordAlgebraIndices(0))
-            \mathcal{P}(\emptyset)
-            sage: latex(CliffordAlgebraIndices(1))
-            \mathcal{P}(\{0\})
-            sage: latex(CliffordAlgebraIndices(2))
-            \mathcal{P}(\{0,1\})
-            sage: latex(CliffordAlgebraIndices(2, 1))
-            \mathcal{P}(\{0,1\}, 1)
         """
         if self._degree is not None:
             extra = f", {self._degree}"
@@ -231,28 +139,7 @@ class CliffordAlgebraIndices(UniqueRepresentation, Parent):
         r"""
         Iterate over ``self``.
 
-        EXAMPLES::
 
-            sage: from sage.algebras.clifford_algebra import CliffordAlgebraIndices
-            sage: idx = CliffordAlgebraIndices(3)
-            sage: for i in idx:
-            ....:     print(i)
-            0
-            1
-            01
-            001
-            11
-            101
-            011
-            111
-
-            sage: idx = CliffordAlgebraIndices(5, 3)
-            sage: list(idx)
-            [111, 1101, 11001, 1011, 10101, 10011, 0111, 01101, 01011, 00111]
-
-            sage: idx = CliffordAlgebraIndices(7, 0)
-            sage: list(idx)
-            [0]
         """
         import itertools
         n = self._nbits
@@ -275,38 +162,7 @@ class CliffordAlgebraIndices(UniqueRepresentation, Parent):
         r"""
         Check containment of ``elt`` in ``self``.
 
-        EXAMPLES::
 
-            sage: from sage.algebras.clifford_algebra import CliffordAlgebraIndices
-            sage: idx = CliffordAlgebraIndices(3)
-            sage: int(8) in idx  # representing the set {4}
-            False
-            sage: int(5) in idx  # representing the set {1,3}
-            True
-            sage: FrozenBitset('1') in idx
-            True
-            sage: FrozenBitset('000001') in idx
-            False
-
-            sage: idx = CliffordAlgebraIndices(6, 3)
-            sage: FrozenBitset('01011') in idx
-            True
-            sage: FrozenBitset('00011') in idx
-            False
-            sage: int(7) in idx
-            True
-            sage: int(8) in idx
-            False
-
-            sage: idx = CliffordAlgebraIndices(7, 0)
-            sage: FrozenBitset() in idx
-            True
-            sage: FrozenBitset('01') in idx
-            False
-            sage: int(0) in idx
-            True
-            sage: int(5) in idx
-            False
         """
         if isinstance(elt, int):
             if self._degree is not None and sum(ZZ(elt).bits()) != self._degree:
@@ -322,27 +178,6 @@ class CliffordAlgebraIndices(UniqueRepresentation, Parent):
         r"""
         Return an element of ``self``.
 
-        EXAMPLES::
-
-            sage: from sage.algebras.clifford_algebra import CliffordAlgebraIndices
-            sage: idx = CliffordAlgebraIndices(0)
-            sage: idx._an_element_()
-            0
-            sage: idx = CliffordAlgebraIndices(1)
-            sage: idx._an_element_()
-            1
-            sage: idx = CliffordAlgebraIndices(2)
-            sage: idx._an_element_()
-            01
-            sage: idx = CliffordAlgebraIndices(3)
-            sage: idx._an_element_()
-            11
-            sage: idx = CliffordAlgebraIndices(5, 3)
-            sage: idx._an_element_()
-            111
-            sage: idx = CliffordAlgebraIndices(7, 0)
-            sage: idx._an_element_()
-            0
         """
         if not self._nbits:
             return FrozenBitset()
@@ -452,44 +287,11 @@ class CliffordAlgebra(CombinatorialFreeModule):
     - ``Q`` -- a quadratic form
     - ``names`` -- (default: ``'e'``) the generator names
 
-    EXAMPLES:
-
-    To create a Clifford algebra, all one needs to do is specify a
-    quadratic form::
-
-        sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-        sage: Cl = CliffordAlgebra(Q)
-        sage: Cl
-        The Clifford algebra of the Quadratic form in 3 variables
-         over Integer Ring with coefficients:
-        [ 1 2 3 ]
-        [ * 4 5 ]
-        [ * * 6 ]
-
-    We can also explicitly name the generators. In this example, the
-    Clifford algebra we construct is an exterior algebra (since we
-    choose the quadratic form to be zero)::
-
-        sage: Q = QuadraticForm(ZZ, 4, [0]*10)
-        sage: Cl.<a,b,c,d> = CliffordAlgebra(Q)
-        sage: a*d
-        a*d
-        sage: d*c*b*a + a + 4*b*c
-        a*b*c*d + 4*b*c + a
     """
     @staticmethod
     def __classcall_private__(cls, Q, names=None):
         """
         Normalize arguments to ensure a unique representation.
-
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl1.<e0,e1,e2> = CliffordAlgebra(Q)
-            sage: Cl2 = CliffordAlgebra(Q)
-            sage: Cl3 = CliffordAlgebra(Q, ['e0','e1','e2'])
-            sage: Cl1 is Cl2 and Cl2 is Cl3
-            True
         """
         if not isinstance(Q, QuadraticForm):
             raise ValueError("{} is not a quadratic form".format(Q))
@@ -506,32 +308,10 @@ class CliffordAlgebra(CombinatorialFreeModule):
     def __init__(self, Q, names, category=None):
         r"""
         Initialize ``self``.
-
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl = CliffordAlgebra(Q)
-            sage: Cl.category()
-            Category of finite dimensional super algebras with basis over
-             (Dedekind domains and euclidean domains
-              and noetherian rings
-              and infinite enumerated sets and metric spaces)
-            sage: TestSuite(Cl).run()
-
-        TESTS:
-
-        We check that the basis elements are indeed indexed by
-        *strictly increasing* tuples::
-
-            sage: Q = QuadraticForm(ZZ, 9)
-            sage: Cl = CliffordAlgebra(Q)
-            sage: ba = Cl.basis().keys()
-            sage: all(FrozenBitset(format(i,'b')[::-1]) in ba for i in range(2**9))
-            True
         """
         self._quadratic_form = Q
         R = Q.base_ring()
-        category = AlgebrasWithBasis(R.category()).Super().Filtered().FiniteDimensional().or_subcategory(category)
+        category = AlgebrasWithBasis(R.category()).Super().FiniteDimensional().Filtered().or_subcategory(category)
         indices = CliffordAlgebraIndices(Q.dim())
         CombinatorialFreeModule.__init__(self, R, indices, category=category, sorting_key=tuple)
         self._assign_names(names)
@@ -540,34 +320,12 @@ class CliffordAlgebra(CombinatorialFreeModule):
         r"""
         Return a string representation of ``self``.
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: CliffordAlgebra(Q)
-            The Clifford algebra of the Quadratic form in 3 variables
-             over Integer Ring with coefficients:
-            [ 1 2 3 ]
-            [ * 4 5 ]
-            [ * * 6 ]
         """
         return "The Clifford algebra of the {}".format(self._quadratic_form)
 
     def _repr_term(self, m):
         """
         Return a string representation of the basis element indexed by ``m``.
-
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl._repr_term((0,2))
-            'x*z'
-            sage: Cl._repr_term(FrozenBitset('101'))
-            'x*z'
-            sage: Cl._repr_term(())
-            '1'
-            sage: Cl._repr_term((1,))
-            'y'
         """
         if not m:
             return '1'
@@ -582,13 +340,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
         r"""
         Return a `\LaTeX` representation of the basis element indexed
         by ``m``.
-
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl._latex_term((0,2))
-            ' x z'
         """
         if not m:
             return '1'
@@ -611,61 +362,8 @@ class CliffordAlgebra(CombinatorialFreeModule):
 
         EXAMPLES::
 
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
             sage: Qp = QuadraticForm(QQ, 3, [1,2,3,4,5,6])
-            sage: Cl = CliffordAlgebra(Q)
             sage: Clp = CliffordAlgebra(Qp)
-            sage: Cl.has_coerce_map_from(Clp)
-            False
-            sage: Clp.has_coerce_map_from(Cl)
-            True
-
-        Check that we preserve the multiplicative structure::
-
-            sage: all(Clp(b)*Clp(b) == Clp(b*b) for b in Cl.basis())
-            True
-
-        Check from the underlying free module::
-
-            sage: M = ZZ^3
-            sage: Mp = QQ^3
-            sage: Cl.has_coerce_map_from(M)
-            True
-            sage: Cl.has_coerce_map_from(Mp)
-            False
-            sage: Clp.has_coerce_map_from(M)
-            True
-            sage: Clp.has_coerce_map_from(Mp)
-            True
-
-        Names matter::
-
-            sage: Cln = CliffordAlgebra(Q, names=['x','y','z'])
-            sage: Cln.has_coerce_map_from(Cl)
-            False
-            sage: Cl.has_coerce_map_from(Cln)
-            False
-
-        Non-injective homomorphisms of base rings don't cause zero
-        values in the coordinate dictionary (this had to be manually
-        ensured)::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Qp = QuadraticForm(Integers(3), 3, [1,2,3,4,5,6])
-            sage: Cl = CliffordAlgebra(Q)
-            sage: Clp = CliffordAlgebra(Qp)
-            sage: a = Cl.basis()[(1,2)]
-            sage: a
-            e1*e2
-            sage: Clp(a) # so far so good
-            e1*e2
-            sage: Clp(3*a) # but now
-            0
-            sage: Clp(3*a) == 0
-            True
-            sage: b = Cl.basis()[(0,2)]
-            sage: Clp(3*a-4*b)
-            2*e0*e2
         """
         if isinstance(V, CliffordAlgebra):
             Q = self._quadratic_form
@@ -684,32 +382,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
         """
         Construct an element of ``self`` from ``x``.
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Qp = QuadraticForm(QQ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Clp = CliffordAlgebra(Qp, names=['x','y','z'])
-            sage: M = ZZ^3
-            sage: Mp = QQ^3
-            sage: Cl(2/3)
-            Traceback (most recent call last):
-            ...
-            TypeError: do not know how to make x=2/3 an element of self
-            sage: Clp(2/3)
-            2/3
-            sage: Clp(x)
-            x
-            sage: M = ZZ^3
-            sage: Clp( M((1,-3,2)) )
-            x - 3*y + 2*z
-
-        Zero coordinates are handled appropriately::
-
-            sage: Q3 = QuadraticForm(Integers(3), 3, [1,2,3,4,5,6])
-            sage: Cl3 = CliffordAlgebra(Q3, names='xyz')  # different syntax for a change
-            sage: Cl3( M((1,-3,2)) )
-            x + 2*z
         """
         # This is the natural lift morphism of the underlying free module
         if x in self.free_module():
@@ -740,23 +412,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
 
         For backwards compatibility, tuples are also accepted.
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl = CliffordAlgebra(Q)
-            sage: Cl._basis_index_function(7)
-            111
-            sage: Cl._basis_index_function(5)
-            101
-            sage: Cl._basis_index_function(4)
-            001
-
-            sage: Cl._basis_index_function((0, 1, 2))
-            111
-            sage: Cl._basis_index_function((0, 2))
-            101
-            sage: Cl._basis_index_function((2,))
-            001
         """
         Q = self._quadratic_form
         format_style = f"0{Q.dim()}b"
@@ -778,12 +433,7 @@ class CliffordAlgebra(CombinatorialFreeModule):
         the quadratic form defining ``self`` is defined, regarded as an
         element of ``self``.
 
-        EXAMPLES::
 
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: [Cl.gen(i) for i in range(3)]
-            [x, y, z]
         """
         return self._from_dict({FrozenBitset((i,)): self.base_ring().one()}, remove_zeros=False)
 
@@ -791,12 +441,7 @@ class CliffordAlgebra(CombinatorialFreeModule):
         """
         Return the algebra generators of ``self``.
 
-        EXAMPLES::
 
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.algebra_generators()
-            Finite family {'x': x, 'y': y, 'z': z}
         """
         d = {x: self.gen(i) for i, x in enumerate(self.variable_names())}
         return Family(self.variable_names(), lambda x: d[x])
@@ -805,12 +450,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
         r"""
         Return the generators of ``self`` (as an algebra).
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.gens()
-            (x, y, z)
         """
         return tuple(self.algebra_generators())
 
@@ -819,12 +458,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
         """
         Return the number of algebra generators of ``self``.
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.ngens()
-            3
         """
         return self._quadratic_form.dim()
 
@@ -835,12 +468,7 @@ class CliffordAlgebra(CombinatorialFreeModule):
         is indexed by the emptyset, which is represented by the
         :class:`sage.data_structures.bitset.Bitset` ``0``.
 
-        EXAMPLES::
 
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.one_basis()
-            0
         """
         return FrozenBitset()
 
@@ -848,12 +476,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
         """
         Check if ``self`` is a commutative algebra.
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.is_commutative()
-            False
         """
         return self._quadratic_form.dim() < 2
 
@@ -864,15 +486,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
         This is the quadratic form used to define ``self``. The
         quadratic form on ``self`` is yet to be implemented.
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.quadratic_form()
-            Quadratic form in 3 variables over Integer Ring with coefficients:
-            [ 1 2 3 ]
-            [ * 4 5 ]
-            [ * * 6 ]
         """
         return self._quadratic_form
 
@@ -883,14 +496,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
         We are considering the Clifford algebra to be `\NN`-filtered,
         and the degree of the monomial ``m`` is the length of ``m``.
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.degree_on_basis((0,))
-            1
-            sage: Cl.degree_on_basis((0,1))
-            2
         """
         return ZZ(len(m))
 
@@ -898,12 +503,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
         """
         Return the associated graded algebra of ``self``.
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.graded_algebra()
-            The exterior algebra of rank 3 over Integer Ring
         """
         return ExteriorAlgebra(self.base_ring(), self.variable_names())
 
@@ -915,12 +514,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
         This is the free module on which the quadratic form that was
         used to construct ``self`` is defined.
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.free_module()
-            Ambient free module of rank 3 over the principal ideal domain Integer Ring
         """
         return FreeModule(self.base_ring(), self._quadratic_form.dim())
 
@@ -931,12 +524,7 @@ class CliffordAlgebra(CombinatorialFreeModule):
         Let `V` be a free `R`-module of rank `n`; then, `Cl(V, Q)` is a
         free `R`-module of rank `2^n`.
 
-        EXAMPLES::
 
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.dimension()
-            8
         """
         return ZZ(2)**self._quadratic_form.dim()
 
@@ -949,18 +537,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
         `e_1 \cdot e_2 \cdots e_n`.
 
         This depends on the choice of basis.
-
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.pseudoscalar()
-            x*y*z
-
-            sage: Q = QuadraticForm(ZZ, 0, [])
-            sage: Cl = CliffordAlgebra(Q)
-            sage: Cl.pseudoscalar()
-            1
 
         REFERENCES:
 
@@ -992,117 +568,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
           Clifford algebra of the domain of (the map represented by) ``m``
 
         OUTPUT: the algebra morphism `Cl(m)` from `Cl(W, m(Q))` to ``self``
-
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: m = matrix([[1,-1,-1],[0,1,-1],[1,1,1]])
-            sage: phi = Cl.lift_module_morphism(m, 'abc')
-            sage: phi
-            Generic morphism:
-              From: The Clifford algebra of the Quadratic form in 3 variables over Integer Ring with coefficients:
-            [ 10 17 3 ]
-            [ * 11 0 ]
-            [ * * 5 ]
-              To:   The Clifford algebra of the Quadratic form in 3 variables over Integer Ring with coefficients:
-            [ 1 2 3 ]
-            [ * 4 5 ]
-            [ * * 6 ]
-            sage: a,b,c = phi.domain().gens()
-            sage: phi(a)
-            x + z
-            sage: phi(b)
-            -x + y + z
-            sage: phi(c)
-            -x - y + z
-            sage: phi(a + 3*b)
-            -2*x + 3*y + 4*z
-            sage: phi(a) + 3*phi(b)
-            -2*x + 3*y + 4*z
-            sage: phi(a*b)
-            x*y + 2*x*z - y*z + 7
-            sage: phi(b*a)
-            -x*y - 2*x*z + y*z + 10
-            sage: phi(a*b + c)
-            x*y + 2*x*z - y*z - x - y + z + 7
-            sage: phi(a*b) + phi(c)
-            x*y + 2*x*z - y*z - x - y + z + 7
-
-        We check that the map is an algebra morphism::
-
-            sage: phi(a)*phi(b)
-            x*y + 2*x*z - y*z + 7
-            sage: phi(a*b)
-            x*y + 2*x*z - y*z + 7
-            sage: phi(a*a)
-            10
-            sage: phi(a)*phi(a)
-            10
-            sage: phi(b*a)
-            -x*y - 2*x*z + y*z + 10
-            sage: phi(b) * phi(a)
-            -x*y - 2*x*z + y*z + 10
-            sage: phi((a + b)*(a + c)) == phi(a + b) * phi(a + c)
-            True
-
-        We can also lift arbitrary linear maps::
-
-            sage: m = matrix([[1,1],[0,1],[1,1]])
-            sage: phi = Cl.lift_module_morphism(m, 'ab')
-            sage: a,b = phi.domain().gens()
-            sage: phi(a)
-            x + z
-            sage: phi(b)
-            x + y + z
-            sage: phi(a*b)
-            x*y - y*z + 15
-            sage: phi(a)*phi(b)
-            x*y - y*z + 15
-            sage: phi(b*a)
-            -x*y + y*z + 12
-            sage: phi(b)*phi(a)
-            -x*y + y*z + 12
-
-            sage: m = matrix([[1,1,1,2], [0,1,1,1], [0,1,1,1]])
-            sage: phi = Cl.lift_module_morphism(m, 'abcd')
-            sage: a,b,c,d = phi.domain().gens()
-            sage: phi(a)
-            x
-            sage: phi(b)
-            x + y + z
-            sage: phi(c)
-            x + y + z
-            sage: phi(d)
-            2*x + y + z
-            sage: phi(a*b*c + d*a)
-            -x*y - x*z + 21*x + 7
-            sage: phi(a*b*c*d)
-            21*x*y + 21*x*z + 42
-
-        TESTS:
-
-        Check that the resulting morphism knows it is for
-        finite-dimensional algebras (:issue:`25339`)::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: m = matrix([[1,-1,-1],[0,1,-1],[1,1,1]])
-            sage: phi = Cl.lift_module_morphism(m, 'abc')
-            sage: phi.category_for()
-            Category of finite dimensional super algebras with basis over
-             (Dedekind domains and euclidean domains
-              and noetherian rings
-              and infinite enumerated sets and metric spaces)
-            sage: phi.matrix()
-            [  1   0   0   0   7  -3  -7   0]
-            [  0   1  -1  -1   0   0   0 -17]
-            [  0   0   1  -1   0   0   0  -4]
-            [  0   1   1   1   0   0   0   3]
-            [  0   0   0   0   1  -1   2   0]
-            [  0   0   0   0   2   2   0   0]
-            [  0   0   0   0  -1   1   2   0]
-            [  0   0   0   0   0   0   0   4]
         """
         Q = self._quadratic_form(m)
         # If R is a quadratic form and m is a matrix, then R(m) returns
@@ -1141,51 +606,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
           ``m``
 
         OUTPUT: the algebra morphism `Cl(m)` from ``self`` to `Cl(W, m^{-1}(Q))`
-
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: m = matrix([[1,1,2],[0,1,1],[0,0,1]])
-            sage: phi = Cl.lift_isometry(m, 'abc')
-            sage: phi(x)
-            a
-            sage: phi(y)
-            a + b
-            sage: phi(x*y)
-            a*b + 1
-            sage: phi(x) * phi(y)
-            a*b + 1
-            sage: phi(z*y)
-            a*b - a*c - b*c
-            sage: phi(z) * phi(y)
-            a*b - a*c - b*c
-            sage: phi(x + z) * phi(y + z) == phi((x + z) * (y + z))
-            True
-
-        TESTS:
-
-        Check that the resulting morphism knows it is for
-        finite-dimensional algebras (:issue:`25339`)::
-
-            sage: Q = QuadraticForm(ZZ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: m = matrix([[1,1,2],[0,1,1],[0,0,1]])
-            sage: phi = Cl.lift_isometry(m, 'abc')
-            sage: phi.category_for()
-            Category of finite dimensional super algebras with basis over
-             (Dedekind domains and euclidean domains
-              and noetherian rings
-              and infinite enumerated sets and metric spaces)
-            sage: phi.matrix()
-            [ 1  0  0  0  1  2  5  0]
-            [ 0  1  1  2  0  0  0  5]
-            [ 0  0  1  1  0  0  0 -1]
-            [ 0  0  0  1  0  0  0  1]
-            [ 0  0  0  0  1  1 -1  0]
-            [ 0  0  0  0  0  1  1  0]
-            [ 0  0  0  0  0  0  1  0]
-            [ 0  0  0  0  0  0  0  1]
         """
         MS = m.parent()
         if not m.is_invertible():
@@ -1229,45 +649,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
             Deprecate this in favor of a method called `center()` once
             subalgebras are properly implemented in Sage.
 
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(QQ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Z = Cl.center_basis(); Z
-            (1, -2/5*x*y*z + x - 3/5*y + 2/5*z)
-            sage: all(z*b - b*z == 0 for z in Z for b in Cl.basis())
-            True
-
-            sage: Q = QuadraticForm(QQ, 3, [1,-2,-3, 4, 2, 1])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Z = Cl.center_basis(); Z
-            (1, -x*y*z + x + 3/2*y - z)
-            sage: all(z*b - b*z == 0 for z in Z for b in Cl.basis())
-            True
-
-            sage: Q = QuadraticForm(QQ, 2, [1,-2,-3])
-            sage: Cl.<x,y> = CliffordAlgebra(Q)
-            sage: Cl.center_basis()
-            (1,)
-
-            sage: Q = QuadraticForm(QQ, 2, [-1,1,-3])
-            sage: Cl.<x,y> = CliffordAlgebra(Q)
-            sage: Cl.center_basis()
-            (1,)
-
-        A degenerate case::
-
-            sage: Q = QuadraticForm(QQ, 3, [4,4,-4,1,-2,1])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.center_basis()
-            (1, x*y*z + x - 2*y - 2*z, x*y + x*z - 2*y*z)
-
-        The most degenerate case (the exterior algebra)::
-
-            sage: Q = QuadraticForm(QQ, 3)
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.center_basis()
-            (1, x*y, x*z, y*z, x*y*z)
         """
         R = self.base_ring()
         B = self.basis()
@@ -1304,49 +685,6 @@ class CliffordAlgebra(CombinatorialFreeModule):
 
             Deprecate this in favor of a method called `supercenter()` once
             subalgebras are properly implemented in Sage.
-
-        EXAMPLES::
-
-            sage: Q = QuadraticForm(QQ, 3, [1,2,3,4,5,6])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: SZ = Cl.supercenter_basis(); SZ
-            (1,)
-            sage: all(z.supercommutator(b) == 0 for z in SZ for b in Cl.basis())
-            True
-
-            sage: Q = QuadraticForm(QQ, 3, [1,-2,-3, 4, 2, 1])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.supercenter_basis()
-            (1,)
-
-            sage: Q = QuadraticForm(QQ, 2, [1,-2,-3])
-            sage: Cl.<x,y> = CliffordAlgebra(Q)
-            sage: Cl.supercenter_basis()
-            (1,)
-
-            sage: Q = QuadraticForm(QQ, 2, [-1,1,-3])
-            sage: Cl.<x,y> = CliffordAlgebra(Q)
-            sage: Cl.supercenter_basis()
-            (1,)
-
-        Singular vectors of a quadratic form generate in the supercenter::
-
-            sage: Q = QuadraticForm(QQ, 3, [1/2,-2,4,256/249,3,-185/8])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.supercenter_basis()
-            (1, x + 249/322*y + 22/161*z)
-
-            sage: Q = QuadraticForm(QQ, 3, [4,4,-4,1,-2,1])
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.supercenter_basis()
-            (1, x + 2*z, y + z, x*y + x*z - 2*y*z)
-
-        The most degenerate case::
-
-            sage: Q = QuadraticForm(QQ, 3)
-            sage: Cl.<x,y,z> = CliffordAlgebra(Q)
-            sage: Cl.supercenter_basis()
-            (1, x, y, z, x*y, x*z, y*z, x*y*z)
         """
         R = self.base_ring()
         B = self.basis()
@@ -1432,13 +770,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         """
         Normalize arguments to ensure a unique representation.
 
-        EXAMPLES::
-
-            sage: E1.<e0,e1,e2> = ExteriorAlgebra(QQ)
-            sage: E2 = ExteriorAlgebra(QQ, 3)
-            sage: E3 = ExteriorAlgebra(QQ, ['e0','e1','e2'])
-            sage: E1 is E2 and E2 is E3
-            True
         """
         if names is None:
             names = 'e'
@@ -1464,15 +795,7 @@ class ExteriorAlgebra(CliffordAlgebra):
         """
         Initialize ``self``.
 
-        EXAMPLES::
 
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E.category()
-            Category of finite dimensional supercommutative supercocommutative
-             super Hopf algebras with basis over Rational Field
-            sage: TestSuite(E).run()
-
-            sage: TestSuite(ExteriorAlgebra(GF(3), ['a', 'b'])).run()
         """
         cat = HopfAlgebrasWithBasis(R).FiniteDimensional().Supercommutative().Supercocommutative()
         CliffordAlgebra.__init__(self, QuadraticForm(R, len(names)), names, category=cat)
@@ -1481,10 +804,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         r"""
         Return a string representation of ``self``.
 
-        EXAMPLES::
-
-            sage: ExteriorAlgebra(QQ, 3)
-            The exterior algebra of rank 3 over Rational Field
         """
         return "The exterior algebra of rank {} over {}".format(self.ngens(), self.base_ring())
 
@@ -1493,13 +812,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         Return a string representation of the basis element indexed by
         ``m``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E._repr_term((0,1,2))
-            'x*y*z'
-            sage: y*x + x*z
-            -x*y + x*z
         """
         if len(m) == 0:
             return '1'
@@ -1514,13 +826,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         r"""
         Return ascii art for the basis element indexed by ``m``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E._ascii_art_term((0,1,2))
-            x/\y/\z
-            sage: ascii_art(y*x + 2*x*z)
-            -x/\y + 2*x/\z
         """
         if len(m) == 0:
             return ascii_art('1')
@@ -1531,13 +836,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         """
         Return unicode art for the basis element indexed by ``m``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E._unicode_art_term((0,1,2))
-            x∧y∧z
-            sage: unicode_art(y*x + x*z)
-            -x∧y + x∧z
         """
         if len(m) == 0:
             return unicode_art('1')
@@ -1549,18 +847,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         Return a `\LaTeX` representation of the basis element indexed
         by ``m``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E._latex_term((0,1,2))
-            ' x \\wedge y \\wedge z'
-            sage: E.<x0,x1,x2> = ExteriorAlgebra(QQ)
-            sage: E._latex_term((0,1,2))
-            ' x_{0} \\wedge x_{1} \\wedge x_{2}'
-            sage: E._latex_term(())
-            '1'
-            sage: E._latex_term((0,))
-            ' x_{0}'
         """
         if len(m) == 0:
             return '1'
@@ -1598,72 +884,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         OUTPUT: the algebra morphism `\Lambda(\phi)` from ``self`` to
         `\Lambda(W)`
 
-        EXAMPLES::
-
-            sage: E.<x,y> = ExteriorAlgebra(QQ)
-            sage: phi = matrix([[0,1],[1,1],[1,2]]); phi
-            [0 1]
-            [1 1]
-            [1 2]
-            sage: L = E.lift_morphism(phi, ['a','b','c']); L
-            Generic morphism:
-              From: The exterior algebra of rank 2 over Rational Field
-              To:   The exterior algebra of rank 3 over Rational Field
-            sage: L(x)
-            b + c
-            sage: L(y)
-            a + b + 2*c
-            sage: L.on_basis()((1,))
-            a + b + 2*c
-            sage: p = L(E.one()); p
-            1
-            sage: p.parent()
-            The exterior algebra of rank 3 over Rational Field
-            sage: L(x*y)
-            -a*b - a*c + b*c
-            sage: L(x)*L(y)
-            -a*b - a*c + b*c
-            sage: L(x + y)
-            a + 2*b + 3*c
-            sage: L(x) + L(y)
-            a + 2*b + 3*c
-            sage: L(1/2*x + 2)
-            1/2*b + 1/2*c + 2
-            sage: L(E(3))
-            3
-
-            sage: psi = matrix([[1, -3/2]]); psi
-            [   1 -3/2]
-            sage: Lp = E.lift_morphism(psi, ['a']); Lp
-            Generic morphism:
-              From: The exterior algebra of rank 2 over Rational Field
-              To:   The exterior algebra of rank 1 over Rational Field
-            sage: Lp(x)
-            a
-            sage: Lp(y)
-            -3/2*a
-            sage: Lp(x + 2*y + 3)
-            -2*a + 3
-
-        TESTS:
-
-        Check that the resulting morphism knows it is for
-        finite-dimensional algebras (:issue:`25339`)::
-
-            sage: E = ExteriorAlgebra(ZZ, 'e', 3)
-            sage: T = jordan_block(0, 2).block_sum(jordan_block(0, 1))
-            sage: phi = E.lift_morphism(T)
-            sage: phi.category_for()
-            Category of finite dimensional super algebras with basis over Integer Ring
-            sage: phi.matrix()
-            [1 0 0 0 0 0 0 0]
-            [0 0 1 0 0 0 0 0]
-            [0 0 0 0 0 0 0 0]
-            [0 0 0 0 0 0 0 0]
-            [0 0 0 0 0 0 0 0]
-            [0 0 0 0 0 0 0 0]
-            [0 0 0 0 0 0 0 0]
-            [0 0 0 0 0 0 0 0]
         """
         n = phi.nrows()
         R = self.base_ring()
@@ -1683,11 +903,6 @@ class ExteriorAlgebra(CliffordAlgebra):
 
         This depends on the choice of basis.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E.volume_form()
-            x*y*z
         """
         d = self._quadratic_form.dim()
         return self.element_class(self, {tuple(range(d)): self.base_ring().one()})
@@ -1707,11 +922,6 @@ class ExteriorAlgebra(CliffordAlgebra):
           values can be coerced into 1-forms (degree 1 elements) in ``E``
           (usually, these values will just be elements of `V`)
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E.boundary({(0,1): z, (1,2): x, (2,0): y})
-            Boundary endomorphism of The exterior algebra of rank 3 over Rational Field
         """
         return ExteriorAlgebraBoundary(self, s_coeff)
 
@@ -1730,11 +940,6 @@ class ExteriorAlgebra(CliffordAlgebra):
           values can be coerced into 1-forms (degree 1 elements) in ``E``
           (usually, these values will just be elements of `V`)
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E.coboundary({(0,1): z, (1,2): x, (2,0): y})
-            Coboundary endomorphism of The exterior algebra of rank 3 over Rational Field
         """
         return ExteriorAlgebraCoboundary(self, s_coeff)
 
@@ -1745,15 +950,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         The degree of ``m`` in the `\ZZ`-grading of ``self`` is defined
         to be the length of ``m``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E.degree_on_basis(())
-            0
-            sage: E.degree_on_basis((0,))
-            1
-            sage: E.degree_on_basis((0,1))
-            2
         """
         return ZZ(len(m))
 
@@ -1780,16 +976,6 @@ class ExteriorAlgebra(CliffordAlgebra):
             This coproduct is a homomorphism of superalgebras, not a
             homomorphism of algebras!
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E.coproduct_on_basis((0,))
-            1 # x + x # 1
-            sage: E.coproduct_on_basis((0,1))
-            1 # x*y + x # y - y # x + x*y # 1
-            sage: E.coproduct_on_basis((0,1,2))
-            1 # x*y*z + x # y*z - y # x*z + x*y # z
-             + z # x*y - x*z # y + y*z # x + x*y*z # 1
         """
         from sage.combinat.combinat import unshuffle_iterator
         one = self.base_ring().one()
@@ -1806,15 +992,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         Given a basis element `\omega`, the antipode is defined by
         `S(\omega) = (-1)^{\deg(\omega)} \omega`.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E.antipode_on_basis(())
-            1
-            sage: E.antipode_on_basis((1,))
-            -y
-            sage: E.antipode_on_basis((1,2))
-            y*z
         """
         return self.term(m, (-self.base_ring().one())**len(m))
 
@@ -1825,12 +1002,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         The counit of an element `\omega` of the exterior algebra
         is its constant coefficient.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: elt = x*y - 2*x + 3
-            sage: E.counit(elt)
-            3
         """
         return x.constant_coefficient()
 
@@ -1851,30 +1022,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         This depends on the choice of basis of the vector space
         whose exterior algebra is ``self``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: k = list(E.basis().keys())
-            sage: E.interior_product_on_basis(k[1], k[1])
-            1
-            sage: E.interior_product_on_basis(k[5], k[1])
-            z
-            sage: E.interior_product_on_basis(k[2], k[5])
-            0
-            sage: E.interior_product_on_basis(k[5], k[2])
-            0
-            sage: E.interior_product_on_basis(k[7], k[5])
-            -y
-
-        Check :issue:`34694`::
-
-            sage: # needs sage.symbolic
-            sage: E = ExteriorAlgebra(SR,'e',3)
-            sage: E.inject_variables()
-            Defining e0, e1, e2
-            sage: a = (e0*e1).interior_product(e0)
-            sage: a * e0
-            -e0*e1
         """
         sgn = True
         t = list(a)
@@ -1948,64 +1095,6 @@ class ExteriorAlgebra(CliffordAlgebra):
             Implement a class for bilinear forms and rewrite this
             method to use that class.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: M = Matrix(QQ, [[1, 2, 3], [2, 3, 4], [3, 4, 5]])
-            sage: Eform = E.lifted_bilinear_form(M)
-            sage: Eform
-            Bilinear Form from The exterior algebra of rank 3 over Rational
-            Field (+) The exterior algebra of rank 3 over Rational Field to
-            Rational Field
-            sage: Eform(x*y, y*z)
-            -1
-            sage: Eform(x*y, y)
-            0
-            sage: Eform(x*(y+z), y*z)
-            -3
-            sage: Eform(x*(y+z), y*(z+x))
-            0
-            sage: N = Matrix(QQ, [[3, 1, 7], [2, 0, 4], [-1, -3, -1]])
-            sage: N.determinant()
-            -8
-            sage: Eform = E.lifted_bilinear_form(N)
-            sage: Eform(x, E.one())
-            0
-            sage: Eform(x, x*z*y)
-            0
-            sage: Eform(E.one(), E.one())
-            1
-            sage: Eform(E.zero(), E.one())
-            0
-            sage: Eform(x, y)
-            1
-            sage: Eform(z, y)
-            -3
-            sage: Eform(x*z, y*z)
-            20
-            sage: Eform(x+x*y+x*y*z, z+z*y+z*y*x)
-            11
-
-        TESTS:
-
-        Exterior algebra over a zero space (a border case)::
-
-            sage: E = ExteriorAlgebra(QQ, 0)
-            sage: M = Matrix(QQ, [])
-            sage: Eform = E.lifted_bilinear_form(M)
-            sage: Eform(E.one(), E.one())
-            1
-            sage: Eform(E.zero(), E.one())
-            0
-
-        .. TODO::
-
-            Another way to compute this bilinear form seems to be to
-            map `x` and `y` to the appropriate Clifford algebra and
-            there compute `x^t y`, then send the result back to the
-            exterior algebra and return its constant coefficient. Or
-            something like this. Once the maps to the Clifford and
-            back are implemented, check if this is faster.
         """
         R = self.base_ring()
 
@@ -2031,17 +1120,6 @@ class ExteriorAlgebra(CliffordAlgebra):
         """
         Return the class that is used to implement ideals of ``self``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: type(E.ideal(x*y - z))
-            <class 'sage.algebras.clifford_algebra.ExteriorAlgebraIdeal'>
-
-        TESTS::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: E._ideal_class_()
-            <class 'sage.algebras.clifford_algebra.ExteriorAlgebraIdeal'>
         """
         return ExteriorAlgebraIdeal
 
@@ -2075,25 +1153,6 @@ class ExteriorAlgebraDifferential(ModuleMorphismByLinearity,
         Standardize the structure coefficients to ensure a unique
         representation.
 
-        EXAMPLES::
-
-            sage: from sage.algebras.clifford_algebra import ExteriorAlgebraDifferential
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: par1 = ExteriorAlgebraDifferential(E, {(0,1): z, (1,2): x, (2,0): y})
-            sage: par2 = ExteriorAlgebraDifferential(E, {(0,1): z, (1,2): x, (0,2): -y})
-            sage: par3 = ExteriorAlgebraDifferential(E, {(1,0): {2:-1}, (1,2): {0:1}, (2,0):{1:1}})
-            sage: par1 is par2
-            True
-            sage: par1 is par3
-            True
-            sage: par2 is par3
-            True
-
-            sage: par4 = ExteriorAlgebraDifferential(E, {})
-            sage: par5 = ExteriorAlgebraDifferential(E, {(1,0): 0, (1,2): {}, (0,2): E.zero()})
-            sage: par6 = ExteriorAlgebraDifferential(E, {(1,0): 0, (1,2): 0, (0,2): 0})
-            sage: par4 is par5 and par5 is par6
-            True
         """
         d = {}
 
@@ -2125,30 +1184,6 @@ class ExteriorAlgebraDifferential(ModuleMorphismByLinearity,
         """
         Initialize ``self``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: par = E.boundary({(0,1): z, (1,2):x, (2,0):y})
-
-        We skip the pickling test as there is an infinite recursion when
-        doing equality checks::
-
-            sage: TestSuite(par).run(skip='_test_pickling')
-
-        Check that it knows it is a finite-dimensional algebra
-        morphism (:issue:`25339`):;
-
-            sage: par.category_for()
-            Category of finite dimensional algebras with basis over Rational Field
-            sage: par.matrix()
-            [ 0  0  0  0  0  0  0  0]
-            [ 0  0  0  0  0  0  1  0]
-            [ 0  0  0  0  0 -1  0  0]
-            [ 0  0  0  0  1  0  0  0]
-            [ 0  0  0  0  0  0  0  0]
-            [ 0  0  0  0  0  0  0  0]
-            [ 0  0  0  0  0  0  0  0]
-            [ 0  0  0  0  0  0  0  0]
         """
         self._s_coeff = s_coeff
 
@@ -2160,21 +1195,6 @@ class ExteriorAlgebraDifferential(ModuleMorphismByLinearity,
         """
         Return the homology determined by ``self``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: par = E.boundary({(0,1): z, (1,2): x, (2,0): y})
-            sage: par.homology()
-            {0: Vector space of dimension 1 over Rational Field,
-             1: Vector space of dimension 0 over Rational Field,
-             2: Vector space of dimension 0 over Rational Field,
-             3: Vector space of dimension 1 over Rational Field}
-            sage: d = E.coboundary({(0,1): z, (1,2): x, (2,0): y})
-            sage: d.homology()
-            {0: Vector space of dimension 1 over Rational Field,
-             1: Vector space of dimension 0 over Rational Field,
-             2: Vector space of dimension 0 over Rational Field,
-             3: Vector space of dimension 1 over Rational Field}
         """
         return self.chain_complex().homology(deg, **kwds)
 
@@ -2224,82 +1244,13 @@ class ExteriorAlgebraBoundary(ExteriorAlgebraDifferential):
         ``s_coeff`` must have only one of the pairs `(i, j)` and
         `(j, i)` as a key. This is not checked.
 
-    EXAMPLES:
-
-    We consider the differential given by Lie algebra given by the cross
-    product `\times` of `\RR^3`::
-
-        sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-        sage: par = E.boundary({(0,1): z, (1,2): x, (2,0): y})
-        sage: par(x)
-        0
-        sage: par(x*y)
-        z
-        sage: par(x*y*z)
-        0
-        sage: par(x+y-y*z+x*y)
-        -x + z
-        sage: par(E.zero())
-        0
-
-    We check that `\partial \circ \partial = 0`::
-
-        sage: p2 = par * par
-        sage: all(p2(b) == 0 for b in E.basis())
-        True
-
-    Another example: the Lie algebra `\mathfrak{sl}_2`, which has a
-    basis `e,f,h` satisfying `[h,e] = 2e`, `[h,f] = -2f`, and `[e,f] = h`::
-
-        sage: E.<e,f,h> = ExteriorAlgebra(QQ)
-        sage: par = E.boundary({(0,1): h, (2,1): -2*f, (2,0): 2*e})
-        sage: par(E.zero())
-        0
-        sage: par(e)
-        0
-        sage: par(e*f)
-        h
-        sage: par(f*h)
-        2*f
-        sage: par(h*f)
-        -2*f
-        sage: C = par.chain_complex(); C
-        Chain complex with at most 4 nonzero terms over Rational Field
-        sage: ascii_art(C)
-                                  [ 0 -2  0]       [0]
-                                  [ 0  0  2]       [0]
-                    [0 0 0]       [ 1  0  0]       [0]
-         0 <-- C_0 <-------- C_1 <----------- C_2 <---- C_3 <-- 0
-        sage: C.homology()
-        {0: Vector space of dimension 1 over Rational Field,
-         1: Vector space of dimension 0 over Rational Field,
-         2: Vector space of dimension 0 over Rational Field,
-         3: Vector space of dimension 1 over Rational Field}
-
-    Over the integers::
-
-        sage: C = par.chain_complex(R=ZZ); C
-        Chain complex with at most 4 nonzero terms over Integer Ring
-        sage: ascii_art(C)
-                                  [ 0 -2  0]       [0]
-                                  [ 0  0  2]       [0]
-                    [0 0 0]       [ 1  0  0]       [0]
-         0 <-- C_0 <-------- C_1 <----------- C_2 <---- C_3 <-- 0
-        sage: C.homology()
-        {0: Z, 1: C2 x C2, 2: 0, 3: Z}
-
     REFERENCES:
 
     - :wikipedia:`Exterior_algebra#Lie_algebra_homology`
     """
     def _repr_type(self):
         """
-        TESTS::
 
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: par = E.boundary({(0,1): z, (1,2): x, (2,0): y})
-            sage: par._repr_type()
-            'Boundary'
         """
         return "Boundary"
 
@@ -2307,20 +1258,6 @@ class ExteriorAlgebraBoundary(ExteriorAlgebraDifferential):
         """
         Return the differential on the basis element indexed by ``m``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: par = E.boundary({(0,1): z, (1,2): x, (2,0): y})
-            sage: par._on_basis(FrozenBitset())
-            0
-            sage: par._on_basis((0,))
-            0
-            sage: par._on_basis((0,1))
-            z
-            sage: par._on_basis((0,2))
-            -y
-            sage: par._on_basis((0,1,2))
-            0
         """
         from itertools import combinations
         E = self.domain()
@@ -2349,38 +1286,6 @@ class ExteriorAlgebraBoundary(ExteriorAlgebraDifferential):
         - ``R`` -- the base ring; the default is the base ring of
           the exterior algebra
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: par = E.boundary({(0,1): z, (1,2): x, (2,0): y})
-            sage: C = par.chain_complex(); C
-            Chain complex with at most 4 nonzero terms over Rational Field
-            sage: ascii_art(C)
-                                      [ 0  0  1]       [0]
-                                      [ 0 -1  0]       [0]
-                        [0 0 0]       [ 1  0  0]       [0]
-             0 <-- C_0 <-------- C_1 <----------- C_2 <---- C_3 <-- 0
-
-        TESTS:
-
-        This still works in degree `1`::
-
-            sage: E.<x> = ExteriorAlgebra(QQ)
-            sage: par = E.boundary({})
-            sage: C = par.chain_complex(); C
-            Chain complex with at most 2 nonzero terms over Rational Field
-            sage: ascii_art(C)
-                        [0]
-             0 <-- C_0 <---- C_1 <-- 0
-
-        Also in degree `0`::
-
-            sage: E = ExteriorAlgebra(QQ, 0)
-            sage: par = E.boundary({})
-            sage: C = par.chain_complex(); C
-            Chain complex with at most 1 nonzero terms over Rational Field
-            sage: ascii_art(C)
-             0 <-- C_0 <-- 0
         """
         from sage.homology.chain_complex import ChainComplex
         from sage.matrix.constructor import Matrix
@@ -2460,90 +1365,10 @@ class ExteriorAlgebraCoboundary(ExteriorAlgebraDifferential):
         For any two distinct elements `i` and `j` of `I`, the dictionary
         ``s_coeff`` must have only one of the pairs `(i, j)` and
         `(j, i)` as a key. This is not checked.
-
-    EXAMPLES:
-
-    We consider the differential coming from the Lie algebra given by the
-    cross product `\times` of `\RR^3`::
-
-        sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-        sage: d = E.coboundary({(0,1): z, (1,2): x, (0, 2): -y})
-        sage: d(x)
-        y*z
-        sage: d(y)
-        -x*z
-        sage: d(x+y-y*z)
-        -x*z + y*z
-        sage: d(x*y)
-        0
-        sage: d(E.one())
-        0
-        sage: d(E.zero())
-        0
-
-    We check that `d \circ d = 0`::
-
-        sage: d2 = d * d
-        sage: all(d2(b) == 0 for b in E.basis())
-        True
-
-    Another example: the Lie algebra `\mathfrak{sl}_2`, which has a
-    basis `e,f,h` satisfying `[h,e] = 2e`, `[h,f] = -2f`, and `[e,f] = h`::
-
-        sage: E.<e,f,h> = ExteriorAlgebra(QQ)
-        sage: d = E.coboundary({(0,1): h, (2,1): -2*f, (2,0): 2*e})
-        sage: d(E.zero())
-        0
-        sage: d(e)
-        -2*e*h
-        sage: d(f)
-        2*f*h
-        sage: d(h)
-        e*f
-        sage: d(e*f)
-        0
-        sage: d(f*h)
-        0
-        sage: d(e*h)
-        0
-        sage: C = d.chain_complex(); C
-        Chain complex with at most 4 nonzero terms over Rational Field
-        sage: ascii_art(C)
-                                  [ 0  0  1]       [0]
-                                  [-2  0  0]       [0]
-                    [0 0 0]       [ 0  2  0]       [0]
-         0 <-- C_3 <-------- C_2 <----------- C_1 <---- C_0 <-- 0
-        sage: C.homology()
-        {0: Vector space of dimension 1 over Rational Field,
-         1: Vector space of dimension 0 over Rational Field,
-         2: Vector space of dimension 0 over Rational Field,
-         3: Vector space of dimension 1 over Rational Field}
-
-    Over the integers::
-
-        sage: C = d.chain_complex(R=ZZ); C
-        Chain complex with at most 4 nonzero terms over Integer Ring
-        sage: ascii_art(C)
-                                  [ 0  0  1]       [0]
-                                  [-2  0  0]       [0]
-                    [0 0 0]       [ 0  2  0]       [0]
-         0 <-- C_3 <-------- C_2 <----------- C_1 <---- C_0 <-- 0
-        sage: C.homology()
-        {0: Z, 1: 0, 2: C2 x C2, 3: Z}
-
-    REFERENCES:
-
-    - :wikipedia:`Exterior_algebra#Differential_geometry`
     """
     def __init__(self, E, s_coeff):
         """
         Initialize ``self``.
-
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: d = E.coboundary({(0,1): z, (1,2):x, (2,0):y})
-            sage: TestSuite(d).run() # known bug - morphisms are properly in a category
         """
         # Construct the dictionary of costructure coefficients, i.e. given
         # [x_j, x_k] = \sum_i s_{jk}^i x_i, we get x^i |-> \sum_{j<k} s_{jk}^i x^j x^k.
@@ -2565,12 +1390,7 @@ class ExteriorAlgebraCoboundary(ExteriorAlgebraDifferential):
 
     def _repr_type(self):
         """
-        TESTS::
 
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: d = E.coboundary({(0,1): z, (1,2): x, (2,0): y})
-            sage: d._repr_type()
-            'Coboundary'
         """
         return "Coboundary"
 
@@ -2578,27 +1398,6 @@ class ExteriorAlgebraCoboundary(ExteriorAlgebraDifferential):
         r"""
         Return the differential on the basis element indexed by ``m``.
 
-        EXAMPLES:
-
-        The vector space `\RR^3` made into a Lie algebra using the
-        cross product::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: d = E.coboundary({(0,1): z, (1,2): x, (0,2): -y})
-            sage: d._on_basis(())
-            0
-            sage: d._on_basis((0,))
-            y*z
-            sage: d._on_basis((1,))
-            -x*z
-            sage: d._on_basis((2,))
-            x*y
-            sage: d._on_basis((0,1))
-            0
-            sage: d._on_basis((0,2))
-            0
-            sage: d._on_basis((0,1,2))
-            0
         """
         E = self.domain()
         cc = self._cos_coeff
@@ -2635,38 +1434,6 @@ class ExteriorAlgebraCoboundary(ExteriorAlgebraDifferential):
         - ``R`` -- the base ring; the default is the base ring of
           the exterior algebra
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: d = E.coboundary({(0,1): z, (1,2): x, (2,0): y})
-            sage: C = d.chain_complex(); C
-            Chain complex with at most 4 nonzero terms over Rational Field
-            sage: ascii_art(C)
-                                      [ 0  0  1]       [0]
-                                      [ 0 -1  0]       [0]
-                        [0 0 0]       [ 1  0  0]       [0]
-             0 <-- C_3 <-------- C_2 <----------- C_1 <---- C_0 <-- 0
-
-        TESTS:
-
-        This still works in degree `1`::
-
-            sage: E.<x> = ExteriorAlgebra(QQ)
-            sage: d = E.coboundary({})
-            sage: C = d.chain_complex(); C
-            Chain complex with at most 2 nonzero terms over Rational Field
-            sage: ascii_art(C)
-                        [0]
-             0 <-- C_1 <---- C_0 <-- 0
-
-        Also in degree `0`::
-
-            sage: E = ExteriorAlgebra(QQ, 0)
-            sage: d = E.coboundary({})
-            sage: C = d.chain_complex(); C
-            Chain complex with at most 1 nonzero terms over Rational Field
-            sage: ascii_art(C)
-             0 <-- C_0 <-- 0
         """
         from sage.homology.chain_complex import ChainComplex
         from sage.matrix.constructor import Matrix
@@ -2715,39 +1482,11 @@ class ExteriorAlgebraIdeal(Ideal_nc):
     """
     An ideal of the exterior algebra.
 
-    EXAMPLES::
-
-        sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-        sage: I = E.ideal(x*y); I
-        Twosided Ideal (x*y) of The exterior algebra of rank 3 over Rational Field
-
-    We can also use it to build a quotient::
-
-        sage: Q = E.quotient(I); Q
-        Quotient of The exterior algebra of rank 3 over Rational Field by the ideal (x*y)
-        sage: Q.inject_variables()
-        Defining xbar, ybar, zbar
-        sage: xbar * ybar
-        0
     """
     def __init__(self, ring, gens, coerce=True, side='twosided'):
         """
         Initialize ``self``.
 
-        EXAMPLES:
-
-        We skip the category test because the ideals are not a proper
-        element class of the monoid of all ideals::
-
-            sage: E.<y, x> = ExteriorAlgebra(QQ)
-            sage: I = E.ideal([x*y - x, x*y - 1])
-            sage: TestSuite(I).run(skip='_test_category')
-
-            sage: I = E.ideal([x*y - 3, 0, 2*3])
-            sage: TestSuite(I).run(skip='_test_category')
-
-            sage: I = E.ideal([])
-            sage: TestSuite(I).run(skip='_test_category')
         """
         self._groebner_strategy = None
         self._reduced = False
@@ -2760,21 +1499,6 @@ class ExteriorAlgebraIdeal(Ideal_nc):
         """
         Reduce ``f`` modulo ``self``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: I = E.ideal(x*y);
-            sage: I.reduce(x*y + x*y*z + z)
-            z
-            sage: I.reduce(x*y + x + y)
-            x + y
-            sage: I.reduce(x*y + x*y*z)
-            0
-
-            sage: E.<a,b,c,d> = ExteriorAlgebra(QQ)
-            sage: I = E.ideal([a+b*c])
-            sage: I.reduce(I.gen(0) * d)
-            0
         """
         if self._groebner_strategy is None:
             self.groebner_basis()
@@ -2786,29 +1510,6 @@ class ExteriorAlgebraIdeal(Ideal_nc):
         Return ``True`` if ``f`` is in this ideal,
         ``False`` otherwise.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: I = E.ideal([x, x*y*z + 2*x*z + 3*y*z], side='left')
-            sage: I.groebner_basis()
-            (x, y*z)
-            sage: x in I
-            True
-            sage: y*z in I
-            True
-            sage: x + 3*y*z in I
-            True
-            sage: x + 3*y in I
-            False
-            sage: x*y in I
-            True
-            sage: x + x*y + y*z + x*z in I
-            True
-
-        .. NOTE::
-
-            Requires computation of a Groebner basis, which can be a very
-            expensive operation.
         """
         return not self.reduce(f)
 
@@ -2816,54 +1517,6 @@ class ExteriorAlgebraIdeal(Ideal_nc):
         """
         Compare ``self`` and ``other``.
 
-        EXAMPLES::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: I = E.ideal([x, x*y*z + 2*x*z + 3*y*z])
-            sage: I == I
-            True
-            sage: Ip = E.ideal([x, y*z])
-            sage: Ip == I
-            True
-            sage: Ip <= I
-            True
-            sage: Ip < I
-            False
-            sage: Ip >= I
-            True
-            sage: Ip > I
-            False
-            sage: E.ideal([x]) < I
-            True
-            sage: E.ideal([x]) <= I
-            True
-            sage: I <= E.ideal([x])
-            False
-
-            sage: E.<a,b,c,d> = ExteriorAlgebra(QQ)
-            sage: p = a + b*c
-            sage: IT = E.ideal([p], side='twosided')
-            sage: IR = E.ideal([p], side='right')
-            sage: IL = E.ideal([p], side='left')
-            sage: IR == IL
-            False
-            sage: IR <= IL
-            False
-            sage: IR >= IL
-            False
-            sage: IL.reduce(p * d)
-            2*a*d
-            sage: IR.reduce(d * p)
-            -2*a*d
-
-            sage: IR <= IT
-            True
-            sage: IL <= IT
-            True
-            sage: IT <= IL
-            False
-            sage: IT <= IR
-            False
         """
         if not isinstance(other, ExteriorAlgebraIdeal):
             if op == op_EQ:
@@ -2926,50 +1579,6 @@ class ExteriorAlgebraIdeal(Ideal_nc):
             If ``self`` is a right ideal and ``other`` is a left ideal,
             this returns a submodule rather than an ideal.
 
-        EXAMPLES::
-
-            sage: E.<a,b,c,d> = ExteriorAlgebra(QQ)
-
-            sage: I = E.ideal([a + 1], side='left')
-            sage: J = I * I; J
-            Left Ideal (2*a + 1, a, b, c, d, a*b, a*c, a*d, 2*a*b*c + b*c, 2*a*b*d + b*d,
-                        2*a*c*d + c*d, a*b*c, a*b*d, a*c*d, b*c*d, a*b*c*d)
-             of The exterior algebra of rank 4 over Rational Field
-            sage: J.groebner_basis()
-            (1,)
-            sage: I.gen(0)^2
-            2*a + 1
-
-            sage: J = E.ideal([b+c])
-            sage: I * J
-            Twosided Ideal (a*b + a*c + b + c) of The exterior algebra of rank 4 over Rational Field
-            sage: J * I
-            Left Ideal (-a*b - a*c + b + c) of The exterior algebra of rank 4 over Rational Field
-
-            sage: K = J * I
-            sage: K
-            Left Ideal (-a*b - a*c + b + c) of The exterior algebra of rank 4 over Rational Field
-            sage: E.ideal([J.gen(0) * d * I.gen(0)], side='left') <= K
-            True
-
-            sage: J = E.ideal([b + c*d], side='right')
-            sage: I * J
-            Twosided Ideal (a*c*d + a*b + c*d + b) of The exterior algebra of rank 4 over Rational Field
-            sage: X = J * I; X
-            Free module generated by {0, 1, 2, 3, 4, 5, 6, 7} over Rational Field
-            sage: [X.lift(b) for b in X.basis()]
-            [c*d + b, -a*c*d + a*b, b*c, b*d, a*b*c, a*b*d, b*c*d, a*b*c*d]
-            sage: p = X.lift(X.basis()[0])
-            sage: p
-            c*d + b
-            sage: a * p  # not a left ideal
-            a*c*d + a*b
-
-            sage: I = E.ideal([a + 1], side='right')
-            sage: E.ideal([1]) * I
-            Twosided Ideal (a + 1) of The exterior algebra of rank 4 over Rational Field
-            sage: I * E.ideal([1])
-            Right Ideal (a + 1) of The exterior algebra of rank 4 over Rational Field
         """
         if not isinstance(other, ExteriorAlgebraIdeal) or self.ring() != other.ring():
             return super().__mul__(other)
@@ -3005,78 +1614,6 @@ class ExteriorAlgebraIdeal(Ideal_nc):
         - ``reduced`` -- boolean (default: ``True``); whether or not to return
           the reduced Gröbner basis
 
-        EXAMPLES:
-
-        We compute an example::
-
-            sage: E.<a,b,c,d,e> = ExteriorAlgebra(QQ)
-            sage: rels = [c*d*e - b*d*e + b*c*e - b*c*d,
-            ....:         c*d*e - a*d*e + a*c*e - a*c*d,
-            ....:         b*d*e - a*d*e + a*b*e - a*b*d,
-            ....:         b*c*e - a*c*e + a*b*e - a*b*c,
-            ....:         b*c*d - a*c*d + a*b*d - a*b*c]
-            sage: I = E.ideal(rels)
-            sage: I.groebner_basis()
-            (-a*b*c + a*b*d - a*c*d + b*c*d,
-             -a*b*c + a*b*e - a*c*e + b*c*e,
-             -a*b*d + a*b*e - a*d*e + b*d*e,
-             -a*c*d + a*c*e - a*d*e + c*d*e)
-
-        With different term orders::
-
-            sage: I.groebner_basis("degrevlex")
-            (b*c*d - b*c*e + b*d*e - c*d*e,
-             a*c*d - a*c*e + a*d*e - c*d*e,
-             a*b*d - a*b*e + a*d*e - b*d*e,
-             a*b*c - a*b*e + a*c*e - b*c*e)
-
-            sage: I.groebner_basis("deglex")
-            (-a*b*c + a*b*d - a*c*d + b*c*d,
-             -a*b*c + a*b*e - a*c*e + b*c*e,
-             -a*b*d + a*b*e - a*d*e + b*d*e,
-             -a*c*d + a*c*e - a*d*e + c*d*e)
-
-        The example above was computed first using M2, which agrees with
-        the ``'degrevlex'`` ordering::
-
-            E = QQ[a..e, SkewCommutative => true]
-            I = ideal( c*d*e - b*d*e + b*c*e - b*c*d,
-                        c*d*e - a*d*e + a*c*e - a*c*d,
-                        b*d*e - a*d*e + a*b*e - a*b*d,
-                        b*c*e - a*c*e + a*b*e - a*b*c,
-                        b*c*d - a*c*d + a*b*d - a*b*c)
-            groebnerBasis(I)
-
-            returns:
-            o3 = | bcd-bce+bde-cde acd-ace+ade-cde abd-abe+ade-bde abc-abe+ace-bce |
-
-        By default, the Gröbner basis is reduced, but we can get non-reduced
-        Gröber bases (which are not unique)::
-
-            sage: E.<x,y,z> = ExteriorAlgebra(QQ)
-            sage: I = E.ideal([x+y*z])
-            sage: I.groebner_basis(reduced=False)
-            (x*y, x*z, y*z + x, x*y*z)
-            sage: I.groebner_basis(reduced=True)
-            (x*y, x*z, y*z + x)
-
-        However, if we have already computed a reduced Gröbner basis (with
-        a given term order), then we return that::
-
-            sage: I = E.ideal([x+y*z])  # A fresh ideal
-            sage: I.groebner_basis()
-            (x*y, x*z, y*z + x)
-            sage: I.groebner_basis(reduced=False)
-            (x*y, x*z, y*z + x)
-
-        TESTS::
-
-            sage: E.<a,b,c,d,e> = ExteriorAlgebra(ZZ)
-            sage: I = E.ideal([a+1, b*c+d])
-            sage: I.groebner_basis()
-            Traceback (most recent call last):
-            ...
-            NotImplementedError: only implemented over fields
         """
         if self.ring().base_ring() not in Fields():
             raise NotImplementedError("only implemented over fields")

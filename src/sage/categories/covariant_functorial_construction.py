@@ -383,7 +383,7 @@ class FunctorialConstructionCategory(Category): # Should this be CategoryWithBas
                        cls._functor_category)
 
     @classmethod
-    @cached_function
+    #@cached_function
     def category_of(cls, category, *args):
         """
         Return the image category of the functor `F_{Cat}`.

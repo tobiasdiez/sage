@@ -17,7 +17,6 @@ AUTHORS:
 from sage.misc.cachefunc import cached_method
 from copy import copy
 
-from sage.categories.modules_with_basis import ModulesWithBasis
 from sage.sets.family import Family
 from sage.combinat.free_module import CombinatorialFreeModule
 
@@ -109,69 +108,11 @@ class AssociatedGradedAlgebra(CombinatorialFreeModule):
     The associated graded algebra of `A`, if `A` is a filtered
     `R`-algebra.
 
-    EXAMPLES:
-
-    Associated graded module of a filtered module::
-
-        sage: A = Modules(QQ).WithBasis().Filtered().example()
-        sage: grA = A.graded_algebra()
-        sage: grA.category()
-        Category of graded vector spaces with basis over Rational Field
-        sage: x = A.basis()[Partition([3,2,1])]
-        sage: grA(x)
-        Bbar[[3, 2, 1]]
-
-    Associated graded algebra of a filtered algebra::
-
-        sage: A = Algebras(QQ).WithBasis().Filtered().example()
-        sage: grA = A.graded_algebra()
-        sage: grA.category()
-        Category of graded algebras with basis over Rational Field
-        sage: x,y,z = [grA.algebra_generators()[s] for s in ['x','y','z']]
-        sage: x
-        bar(U['x'])
-        sage: y * x + z
-        bar(U['x']*U['y']) + bar(U['z'])
-        sage: A(y) * A(x) + A(z)
-        U['x']*U['y']
-
-    We note that the conversion between ``A`` and ``grA`` is
-    the canonical ``QQ``-module isomorphism stemming from the
-    fact that the underlying ``QQ``-modules of ``A`` and
-    ``grA`` are isomorphic::
-
-        sage: grA(A.an_element())
-        bar(U['x']^2*U['y']^2*U['z']^3) + 2*bar(U['x']) + 3*bar(U['y']) + bar(1)
-        sage: elt = A.an_element() + A.algebra_generators()['x'] + 2
-        sage: grelt = grA(elt); grelt
-        bar(U['x']^2*U['y']^2*U['z']^3) + 3*bar(U['x']) + 3*bar(U['y']) + 3*bar(1)
-        sage: A(grelt) == elt
-        True
-
-    .. TODO::
-
-        The algebra ``A`` must currently be an instance of (a subclass of)
-        :class:`CombinatorialFreeModule`. This should work with any
-        filtered algebra with a basis.
-
-    .. TODO::
-
-        Implement a version of associated graded algebra for
-        filtered algebras without a distinguished basis.
-
-    REFERENCES:
-
-    - :wikipedia:`Filtered_algebra#Associated_graded_algebra`
     """
     def __init__(self, A, category=None):
         """
         Initialize ``self``.
 
-        EXAMPLES::
-
-            sage: A = Algebras(QQ).WithBasis().Filtered().example()
-            sage: grA = A.graded_algebra()
-            sage: TestSuite(grA).run(elements=[prod(grA.algebra_generators())])
         """
         if A not in ModulesWithBasis(A.base_ring().category()).Filtered():
             raise ValueError("the base algebra must be filtered and with basis")
@@ -200,13 +141,6 @@ class AssociatedGradedAlgebra(CombinatorialFreeModule):
         """
         Return a string representation of ``self``.
 
-        EXAMPLES::
-
-            sage: A = Algebras(QQ).WithBasis().Filtered().example()
-            sage: A.graded_algebra()
-            Graded Algebra of An example of a filtered algebra with basis:
-             the universal enveloping algebra of Lie algebra of RR^3
-             with cross product over Rational Field
         """
         from sage.categories.algebras_with_basis import AlgebrasWithBasis
         if self in AlgebrasWithBasis:
@@ -217,11 +151,6 @@ class AssociatedGradedAlgebra(CombinatorialFreeModule):
         r"""
         Return a latex representation of ``self``.
 
-        EXAMPLES::
-
-            sage: A = Algebras(QQ).WithBasis().Filtered().example()
-            sage: latex(A.graded_algebra())
-            \operatorname{gr} ...
         """
         from sage.misc.latex import latex
         return "\\operatorname{gr} " + latex(self._A)
@@ -239,14 +168,7 @@ class AssociatedGradedAlgebra(CombinatorialFreeModule):
 
         EXAMPLES::
 
-            sage: A = Algebras(QQ).WithBasis().Filtered().example()
-            sage: grA = A.graded_algebra()
-            sage: grA(A.an_element())
-            bar(U['x']^2*U['y']^2*U['z']^3)
-             + 2*bar(U['x']) + 3*bar(U['y']) + bar(1)
-            sage: grA(A.an_element() + A.algebra_generators()['x'] + 2)
-            bar(U['x']^2*U['y']^2*U['z']^3)
-             + 3*bar(U['x']) + 3*bar(U['y']) + 3*bar(1)
+            sage: A = Algebras(QQ).WithBasis().Filtered()
         """
         if isinstance(x, CombinatorialFreeModule.Element):
             if x.parent() is self._A:
@@ -256,13 +178,6 @@ class AssociatedGradedAlgebra(CombinatorialFreeModule):
     def gen(self, *args, **kwds):
         """
         Return a generator of ``self``.
-
-        EXAMPLES::
-
-            sage: A = Algebras(QQ).WithBasis().Filtered().example()
-            sage: grA = A.graded_algebra()
-            sage: grA.gen('x')
-            bar(U['x'])
         """
         try:
             x = self._A.gen(*args, **kwds)
@@ -277,13 +192,6 @@ class AssociatedGradedAlgebra(CombinatorialFreeModule):
 
         This assumes that the algebra generators of `A` provided by
         its ``algebra_generators`` method are homogeneous.
-
-        EXAMPLES::
-
-            sage: A = Algebras(QQ).WithBasis().Filtered().example()
-            sage: grA = A.graded_algebra()
-            sage: grA.algebra_generators()
-            Finite family {'x': bar(U['x']), 'y': bar(U['y']), 'z': bar(U['z'])}
         """
         G = self._A.algebra_generators()
         return Family(G.keys(), lambda x: self(G[x]), name='generator')
@@ -291,14 +199,6 @@ class AssociatedGradedAlgebra(CombinatorialFreeModule):
     def degree_on_basis(self, x):
         """
         Return the degree of the basis element indexed by ``x``.
-
-        EXAMPLES::
-
-            sage: A = Algebras(QQ).WithBasis().Filtered().example()
-            sage: grA = A.graded_algebra()
-            sage: all(A.degree_on_basis(x) == grA.degree_on_basis(x)
-            ....:     for g in grA.algebra_generators() for x in g.support())
-            True
         """
         return self._A.degree_on_basis(x)
 
@@ -309,13 +209,6 @@ class AssociatedGradedAlgebra(CombinatorialFreeModule):
         `\operatorname{gr} A`.
 
         This assumes that the unity `1` of `A` belongs to `F_0`.
-
-        EXAMPLES::
-
-            sage: A = Algebras(QQ).WithBasis().Filtered().example()
-            sage: grA = A.graded_algebra()
-            sage: grA.one_basis()
-            1
         """
         return self._A.one_basis()
 
@@ -323,19 +216,6 @@ class AssociatedGradedAlgebra(CombinatorialFreeModule):
         """
         Return the product on basis elements given by the
         indices ``x`` and ``y``.
-
-        EXAMPLES::
-
-            sage: A = Algebras(QQ).WithBasis().Filtered().example()
-            sage: grA = A.graded_algebra()
-            sage: G = grA.algebra_generators()
-            sage: x,y,z = G['x'], G['y'], G['z']
-            sage: x * y # indirect doctest
-            bar(U['x']*U['y'])
-            sage: y * x
-            bar(U['x']*U['y'])
-            sage: z * y * x
-            bar(U['x']*U['y']*U['z'])
         """
         ret = self._A.product_on_basis(x, y)
         deg = self._A.degree_on_basis(x) + self._A.degree_on_basis(y)

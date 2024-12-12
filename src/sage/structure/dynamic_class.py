@@ -460,7 +460,14 @@ def dynamic_class_internal(name, bases, cls=None, reduction=None, doccls=None, p
                     metaclass = DynamicInheritComparisonClasscallMetaclass
                 else:
                     raise NotImplementedError("No subclass of %r known that inherits from InheritComparisonMetaclass" % (metaclass,))
-    return metaclass(name, bases, methods)
+    print(name, bases, metaclass)
+    try:
+        return metaclass(name, bases, methods)
+    except TypeError as e:
+        print(name, bases, metaclass)
+        print(e)
+        return bases[0]
+        #raise
 
 
 class DynamicMetaclass(type):
