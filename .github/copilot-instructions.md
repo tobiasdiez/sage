@@ -8,36 +8,42 @@ SageMath is a free open-source mathematics software system licensed under the GP
 
 ### Fresh Installation and Build Process
 
-Bootstrap, configure, and build the repository from scratch:
+Build SageMath using the modern Meson build system with conda dependencies:
 
-1. **Install system prerequisites** (Ubuntu/Debian):
+1. **Install Miniforge** (recommended conda distribution):
    ```bash
-   sudo apt update
-   sudo apt install -y binutils make m4 perl flex python3 tar bc gcc libbz2-dev bzip2 g++ ca-certificates patch pkg-config
+   # Download and install Miniforge for your platform
+   # Linux/macOS: https://github.com/conda-forge/miniforge#install
+   # Or use system package manager: sudo apt install miniforge3 (Ubuntu 22.04+)
    ```
 
-2. **Bootstrap the build system**:
+2. **Create conda environment** with all dependencies:
    ```bash
-   make configure
+   # Linux
+   mamba env create --file environment-3.12-linux.yml --name sage-dev
+   
+   # macOS
+   mamba env create --file environment-3.12-macos.yml --name sage-dev
+   
+   # Windows (experimental)
+   mamba env create --file environment-3.12-win.yml --name sage-dev
    ```
-   - **NEVER CANCEL**: Takes approximately 1 minute. Set timeout to 5+ minutes.
+   - **NEVER CANCEL**: Takes 5-15 minutes to download and install conda packages. Set timeout to 30+ minutes.
+   - Use different Python versions by replacing `3.12` with `3.11` or `3.13` in filename
 
-3. **Configure the build** (recommended with parallel build optimization):
+3. **Activate conda environment**:
    ```bash
-   export MAKEFLAGS="-j$(nproc) -l$(nproc).5"
-   ./configure --enable-build-as-root
+   mamba activate sage-dev
    ```
-   - **NEVER CANCEL**: Takes approximately 30 seconds. Set timeout to 5+ minutes.
-   - Use `--config-cache` for faster subsequent configure runs during development
-   - Use `--enable-ccache` to enable disk cache for object files (speeds up branch switching)
 
-4. **Build Sage**:
+4. **Build and install Sage** (editable mode):
    ```bash
-   make build
+   pip install --no-build-isolation --editable .
    ```
-   - **NEVER CANCEL**: Takes 60-90 minutes on modern hardware. Set timeout to 120+ minutes.
-   - For full build with documentation: `make` (takes longer)
-   - For minimal build without docs: `make build`
+   - **NEVER CANCEL**: Takes 5-15 minutes for compilation. Set timeout to 30+ minutes.
+   - Much faster than old build system since dependencies come pre-built from conda
+   - `--no-build-isolation` allows reusing conda dependencies
+   - `--editable` enables hot-reloading of changes without rebuild
 
 5. **Test the installation**:
    ```bash
@@ -59,21 +65,21 @@ Bootstrap, configure, and build the repository from scratch:
   ./sage -t --optional src/sage/rings/finite_rings/  # Include optional tests  
   ```
 
-- **Quick test suite**:
+- **Modern pytest-based testing**:
   ```bash
-  make test
+  pytest --doctest --doctest-ignore-import-errors -x src/sage/categories
   ```
-  - **NEVER CANCEL**: Takes 15-30 minutes. Set timeout to 60+ minutes.
+  - **NEVER CANCEL**: Takes 5-30 minutes depending on scope. Set timeout to 60+ minutes.
 
-- **Long test suite** (comprehensive):
+- **Full test suite** (all tests):
   ```bash
-  make ptestlong
+  ./sage -t --all -p4 --format github
   ```
-  - **NEVER CANCEL**: Takes 10 minutes to several hours (over 200,000 lines of tests). Set timeout to 300+ minutes.
+  - **NEVER CANCEL**: Takes 30 minutes to several hours (over 200,000 lines of tests). Set timeout to 300+ minutes.
 
-- **Parallel testing** (faster):
+- **Test only new/changed files** (faster for development):
   ```bash
-  ./sage -t --optional --all --parallel 4  # Use 4 cores
+  ./sage -t --new --long -p4 --format github
   ```
 
 ### Development Workflow
@@ -100,26 +106,32 @@ Bootstrap, configure, and build the repository from scratch:
 
 ### Developer-Specific Commands
 
-- **Build specific package**:
+- **Rebuild after changes**:
   ```bash
-  ./sage -i package_name
+  # For Cython files - automatic rebuild in editable mode
+  # Just restart Sage, no manual rebuild needed
+  
+  # For substantial changes, reinstall
+  pip install --no-build-isolation --editable .
   ```
 
-- **Force rebuild a package**:
+- **Work with conda environment**:
   ```bash
-  ./sage -f package_name  
+  mamba activate sage-dev                    # Activate development environment
+  mamba list                                 # List installed packages
+  mamba env update --file environment-3.12-linux.yml  # Update environment
   ```
 
-- **Get package information**:
+- **Direct meson commands** (advanced):
   ```bash
-  ./sage --info package_name
+  meson setup builddir                       # Configure build directory
+  meson compile -C builddir                  # Compile changes
+  meson install -C builddir                  # Install to environment
   ```
 
-- **List all packages**:
+- **Update conda lock files** (maintainers):
   ```bash
-  ./sage --package list
-  ./sage --optional          # Optional packages only
-  ./sage --experimental      # Experimental packages only
+  python tools/update-conda.py              # Update environment files
   ```
 
 ### Git and Development Best Practices
@@ -132,11 +144,12 @@ Bootstrap, configure, and build the repository from scratch:
   ```
 
 - **Standard development cycle**:
-  1. Edit source files in `src/sage/`
-  2. Build to test changes: `make build`
-  3. Run doctests: `./sage -t modified_file.py`
-  4. Commit changes: `git add . && git commit -m "Description"`
-  5. Push and create pull request
+  1. Activate conda environment: `mamba activate sage-dev`
+  2. Edit source files in `src/sage/`
+  3. Changes auto-rebuild in editable mode (for Cython files)
+  4. Test changes: `./sage -t modified_file.py`
+  5. Commit changes: `git add . && git commit -m "Description"`
+  6. Push and create pull request
 
 - **Keep up with develop branch**:
   ```bash
@@ -173,7 +186,7 @@ After making any code changes, you MUST run through complete validation scenario
 
 4. **Build validation** (after source changes):
    ```bash
-   make build && ./sage -c "print('Build successful')"
+   pip install --no-build-isolation --editable . && ./sage -c "print('Build successful')"
    ```
 
 5. **Doctest validation** (critical for any code changes):
@@ -185,29 +198,35 @@ After making any code changes, you MUST run through complete validation scenario
 ### Pre-Commit Validation
 Always run these before committing changes:
 
-- **Code quality checks**: Currently, Sage uses various linters integrated into the build process
-- **Documentation build**: If you modify docs, run `make doc-html` to verify documentation builds correctly
+- **Code quality checks**: Use integrated linters with meson build system
+- **Documentation build**: If you modify docs, install sage-docbuild and run:
+  ```bash
+  pip install --no-build-isolation -v --editable ./pkgs/sage-docbuild
+  sage --docbuild all html
+  ```
 
 ## Common Tasks
 
 ### Package Management
-- **List optional packages**: `./sage --optional`
-- **Install optional package**: `./sage -i package_name`
-- **Get package info**: `./sage --info package_name`
+- **Conda environment management**: All dependencies managed via conda environment files
+- **Update environment**: `mamba env update --file environment-3.12-linux.yml --name sage-dev`
+- **List packages**: `mamba list` (in activated environment)
 
 ### Building Documentation
 - **HTML documentation**: 
   ```bash
-  make doc-html
+  pip install --no-build-isolation -v --editable ./pkgs/sage-docbuild
+  sage --docbuild all html
   ```
-  - **NEVER CANCEL**: Takes 30-60 minutes. Set timeout to 90+ minutes.
+  - **NEVER CANCEL**: Takes 10-30 minutes. Set timeout to 60+ minutes.
 
 - **PDF documentation**:
   ```bash
-  make doc-pdf
+  # First install docbuild package, then:
+  sage --docbuild all pdf
   ```
   - Requires LaTeX to be installed
-  - **NEVER CANCEL**: Takes 45-90 minutes. Set timeout to 120+ minutes.
+  - **NEVER CANCEL**: Takes 15-45 minutes. Set timeout to 90+ minutes.
 
 ### Git Workflow
 - **Create development branch**: `git checkout -b my_branch develop`
@@ -217,132 +236,154 @@ Always run these before committing changes:
 
 ### Core Directories
 - **Source code**: `src/` - Main Sage source code
-- **Build system**: `build/` - Build configuration and package definitions
+- **Build system**: `meson.build` files throughout source tree - Meson build configuration
 - **Documentation**: `src/doc/` - Documentation source files
-- **Built Sage**: `local/` - Installation directory (created after build)
+- **Conda environments**: `environment-*.yml` - Conda dependency specifications
+- **Build directory**: `builddir/` or `build/cp*/` - Meson build artifacts (created after build)
 
 ### Configuration Files
-- **Main Makefile**: `Makefile` - Top-level build targets
-- **Build configuration**: `build/make/Makefile` - Detailed build rules
-- **Package definitions**: `build/pkgs/*/` - Individual package configurations
-- **Project config**: `pyproject.toml` - Python packaging configuration
+- **Meson build**: `meson.build` - Modern build system configuration throughout source tree
+- **Conda environments**: `environment-3.X-{linux,macos,win}.yml` - Platform-specific dependencies
+- **Python packaging**: `pyproject.toml` - Python packaging configuration with meson-python backend
+- **Development tools**: `tox.ini`, `pyrightconfig.json` - Testing and type checking configuration
 
 ### Key Scripts
-- **Main Sage launcher**: `./sage` - Primary entry point
-- **Build tools**: `build/bin/` - Build helper scripts
-- **Source tools**: `src/bin/` - Source tree utilities
+- **Main Sage launcher**: `./sage` - Primary entry point (works after pip install)
+- **Conda environment tools**: `tools/update-conda.py` - Update conda lock files
+- **Meson utilities**: `tools/update-meson.py` - Update meson.build files
 
 ## Build System Details
 
-### Build Targets (from root directory)
-- `make configure` - Bootstrap and create configure script
-- `make build` - Build Sage (minimal, no docs)
-- `make` or `make all` - Build Sage with documentation
-- `make test` - Run test suite
-- `make ptestlong` - Run comprehensive tests
-- `make doc-clean` - Clean documentation
-- `make distclean` - Clean everything (forces complete rebuild)
+### Build Targets (using meson + conda)
+- `mamba env create --file environment-3.12-linux.yml --name sage-dev` - Create conda environment
+- `mamba activate sage-dev` - Activate development environment
+- `pip install --no-build-isolation --editable .` - Build and install Sage in editable mode
+- `./sage -t --all` - Run test suite
+- `sage --docbuild all html` - Build documentation
+- `mamba env remove --name sage-dev` - Clean remove environment (complete cleanup)
 
 ### Time Expectations and Timeouts
-- **Bootstrap (`make configure`)**: 1 minute (timeout: 5+ minutes)
-- **Configure (`./configure`)**: 30 seconds (timeout: 5+ minutes)  
-- **Full build from scratch (`make build`)**: 60-90 minutes on modern hardware (timeout: 120+ minutes)
-- **Incremental build**: 5-15 minutes (timeout: 30+ minutes)
+- **Conda environment creation**: 5-15 minutes (timeout: 30+ minutes)
+- **Sage build and install (`pip install --editable`)**: 5-15 minutes (timeout: 30+ minutes)  
+- **Incremental rebuild**: 1-5 minutes (timeout: 15+ minutes)
 - **Quick test (`./sage -t file.py`)**: 5-30 seconds per file (timeout: 5+ minutes)
-- **Test suite (`make test`)**: 15-30 minutes (timeout: 60+ minutes)
-- **Long tests (`make ptestlong`)**: 10 minutes to several hours (timeout: 300+ minutes)
-- **Documentation build (`make doc-html`)**: 30-60 minutes (timeout: 90+ minutes)
+- **Full test suite (`./sage -t --all`)**: 30 minutes to several hours (timeout: 300+ minutes)
+- **Documentation build (`sage --docbuild all html`)**: 10-30 minutes (timeout: 60+ minutes)
 
-**CRITICAL**: NEVER CANCEL any build or test command. Builds may take over an hour and tests may take several hours. Use appropriate timeouts and wait for completion.
+**CRITICAL**: NEVER CANCEL any build or test command. Even with conda dependencies, compilation may take 15+ minutes and tests may take several hours. Use appropriate timeouts and wait for completion.
 
 ### Build Progress Indicators
-During build, you'll see packages being compiled in this typical order:
-1. **Base toolchain** (zlib, mpfr, mpc, gcc if needed) - First 10-20 minutes
-2. **Mathematical libraries** (m4ri, gf2x, flint, pari, etc.) - Next 20-40 minutes  
-3. **Higher-level packages** (python, ecl, gap, etc.) - Next 20-30 minutes
-4. **SageMath core** (sagelib, documentation) - Final 10-20 minutes
+During build with conda+meson, you'll see this typical progression:
+1. **Conda environment setup** - Package downloading and dependency resolution (5-15 minutes)
+2. **Meson configuration** - Build system setup and dependency detection (30 seconds - 2 minutes)
+3. **Cython compilation** - Core mathematical modules compilation (5-10 minutes)  
+4. **Python package installation** - Final installation steps (1-3 minutes)
 
-**Current validated build progress** (as of testing):
-- Bootstrap: 1 minute ✓
-- Configure: 30 seconds ✓  
-- Base toolchain (mpfr, mpc): ~8 minutes ✓
-- Mathematical libraries (m4ri, gf2x): ~15 minutes ✓  
-- FLINT (number theory): ~21 minutes ✓
-- eclib (elliptic curves): ~27 minutes ✓
-- Python 3.12.5: ~33 minutes ✓ (completed)
-- Higher-level packages: ~35+ minutes (in progress)
+**Current validated build progress** (conda + meson):
+- Environment creation: 5-15 minutes ✓
+- Meson setup: 30 seconds ✓  
+- Pip install (editable): 5-15 minutes ✓
+- All mathematical libraries come pre-built from conda ✓
+- Much faster than traditional source builds ✓
 
 **All validation commands tested and working correctly ✓**
 
-This progression confirms our 60-90 minute total build estimate for modern hardware.
+This approach leverages pre-built conda packages for mathematical libraries, dramatically reducing build time compared to building everything from source.
 
 ### Monitoring Build Progress
 ```bash
-# Watch build in real-time (run in separate terminal)
-tail -f logs/install.log
+# Watch meson build in real-time
+ninja -C builddir -v
 
-# Check what package is currently building
-grep "Setting up build directory" logs/install.log | tail -5
+# Check conda environment packages
+mamba list
 
-# Check for any build errors
-grep -i error logs/install.log
+# Check build directory contents
+ls -la builddir/
+
+# Check for meson build errors
+cat builddir/meson-logs/meson-log.txt
 ```
 
 ## Environment Setup
 
-### Required Environment Variables
+### Required Environment Setup
 ```bash
-export MAKEFLAGS="-j$(nproc) -l$(nproc).5"  # Parallel build
-export V=0  # Reduce verbosity (optional)
+# Activate conda environment (must be done each session)
+mamba activate sage-dev
+
+# Set environment variable for verbose editable builds (optional)
+export MESONPY_EDITABLE_VERBOSE=1  # Shows Cython recompilation messages
+
+# For Windows additional setup
+export LIB="$LIB;$CONDA_PREFIX\\Library\\lib"
+export INCLUDE="$INCLUDE;$CONDA_PREFIX\\Library\\include"
 ```
 
-### macOS Specific (if using Homebrew)
-```bash
-source ./.homebrew-build-env
-```
+### Platform-Specific Setup
+
+#### Linux
+- Use `environment-3.12-linux.yml` or `environment-3.12-linux-aarch64.yml` for ARM
+
+#### macOS  
+- Use `environment-3.12-macos.yml` or `environment-3.12-macos-x86_64.yml` for Intel Macs
+
+#### Windows (Experimental)
+- Install Visual Studio Build Tools first
+- Use `environment-3.12-win.yml`
+- Use "VS x64 Native Tools Command Prompt"
 
 ### Development Environment
-- **Python version**: Python 3.4+ required for build system
+- **Python version**: Python 3.11+ (specified in environment file)
+- **Conda/Mamba**: Required for dependency management
 - **Git**: Required for development workflow
-- **Disk space**: Several GB required for full build
+- **Disk space**: 2-5GB for conda environment + source (much less than old build system)
 - **RAM**: 4GB+ recommended, 8GB+ for comfortable development
 
 ## Troubleshooting
 
 ### Common Issues
-- **Missing system packages**: Run the apt install command above
-- **Build fails**: Check `logs/install.log` for detailed error messages
-- **Long build times**: This is normal - Sage builds many mathematical libraries from source
+- **Missing conda/mamba**: Install Miniforge or Mambaforge
+- **Environment creation fails**: Retry with `mamba env create` (network issues are common)
+- **Build fails**: Check `builddir/meson-logs/meson-log.txt` for detailed error messages
+- **Import errors**: Make sure conda environment is activated with `mamba activate sage-dev`
 - **Test failures**: 2-3 test failures are typically acceptable in complex mathematical software
-- **Out of disk space**: Sage build requires several GB (5-10GB recommended)
-- **Out of memory**: 4GB+ RAM recommended, 8GB+ for comfortable development
+- **Out of disk space**: Conda environments require 2-5GB (much less than old build system)
+- **Editable install issues**: Run `pip install --no-build-isolation --editable .` again
 
 ### Build Logs and Debugging
-- **Main build log**: `logs/install.log` - Contains complete build output
-- **Individual package logs**: `logs/pkgs/PACKAGE_NAME.log` 
-- **Real-time monitoring**: `tail -f logs/install.log` (run in separate terminal)
-- **Check build progress**: Build outputs show current package being compiled
-- **Build failure debugging**: Look for `ERROR` entries in logs
+- **Meson build log**: `builddir/meson-logs/meson-log.txt` - Contains complete build output
+- **Conda environment**: `mamba list` - See all installed packages and versions
+- **Real-time monitoring**: `ninja -C builddir -v` - Watch compilation progress
+- **Check environment**: `mamba info` - Conda environment details
+- **Build failure debugging**: Check meson logs and ensure conda environment is activated
 
 ### Performance Optimization
 ```bash
-# Use all CPU cores for faster builds
-export MAKEFLAGS="-j$(nproc) -l$(nproc).5"
+# Use parallel compilation (automatic with meson)
+pip install --no-build-isolation --editable . -v
 
-# Use ccache for faster rebuilds (optional)
-./configure --enable-ccache
+# Enable verbose editable builds
+export MESONPY_EDITABLE_VERBOSE=1
 
-# Reduce build verbosity (optional)
-export V=0
+# Use ccache for faster recompilation
+export CC="ccache gcc"
+export CXX="ccache g++"
 ```
 
 ### Clean Rebuild
 If build issues persist:
 ```bash
-make distclean      # Clean everything (takes ~1 minute)
-make configure      # Re-bootstrap (takes ~1 minute)  
-./configure --enable-build-as-root
-make build          # Full rebuild (takes 60-90 minutes)
+# Remove build directory
+rm -rf builddir/
+
+# Recreate conda environment  
+mamba env remove --name sage-dev
+mamba env create --file environment-3.12-linux.yml --name sage-dev
+mamba activate sage-dev
+
+# Clean reinstall
+pip install --no-build-isolation --editable .
 ```
 
 ## Repository Structure
@@ -355,12 +396,13 @@ make build          # Full rebuild (takes 60-90 minutes)
 - **Documentation**: Comprehensive mathematical documentation system
 
 ### Package System
-Sage uses a sophisticated package management system located in `build/pkgs/`:
-- **Standard packages** (`type: standard`): Core mathematical functionality, always built
-- **Optional packages** (`type: optional`): Additional mathematical tools, install with `./sage -i package`
-- **Experimental packages** (`type: experimental`): Cutting-edge mathematical software
+Sage now uses conda for dependency management instead of building packages from source:
+- **Conda packages**: All mathematical libraries come pre-built from conda-forge
+- **Environment files**: `environment-*.yml` specify exact versions and dependencies  
+- **Lock files**: Generated by conda-lock for reproducible environments across platforms
+- **Meson build**: Only compiles Sage's own Cython/Python code, not dependencies
 
-### Key Mathematical Libraries Built During Installation
+### Key Mathematical Libraries (Pre-built from Conda)
 - **MPFR, MPC**: Multi-precision floating-point arithmetic
 - **FLINT**: Fast Library for Number Theory  
 - **PARI/GP**: Computer algebra system for number theory
@@ -369,4 +411,4 @@ Sage uses a sophisticated package management system located in `build/pkgs/`:
 - **SingularL**: Computer algebra system for polynomial computations
 - **And 100+ other specialized mathematical packages**
 
-This build system ensures Sage can be built consistently across different platforms while providing access to a vast ecosystem of mathematical software.
+This conda-based approach provides consistent, fast builds across platforms while maintaining access to the full ecosystem of mathematical software.
