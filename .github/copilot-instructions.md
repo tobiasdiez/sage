@@ -93,6 +93,59 @@ Bootstrap, configure, and build the repository from scratch:
   ./sage script.py
   ```
 
+- **Sage command-line evaluation**:
+  ```bash
+  ./sage -c "print(factor(2^100-1))"
+  ```
+
+### Developer-Specific Commands
+
+- **Build specific package**:
+  ```bash
+  ./sage -i package_name
+  ```
+
+- **Force rebuild a package**:
+  ```bash
+  ./sage -f package_name  
+  ```
+
+- **Get package information**:
+  ```bash
+  ./sage --info package_name
+  ```
+
+- **List all packages**:
+  ```bash
+  ./sage --package list
+  ./sage --optional          # Optional packages only
+  ./sage --experimental      # Experimental packages only
+  ```
+
+### Git and Development Best Practices
+
+- **Create development branch from develop**:
+  ```bash
+  git checkout develop
+  git pull origin develop
+  git checkout -b feature/my-feature develop
+  ```
+
+- **Standard development cycle**:
+  1. Edit source files in `src/sage/`
+  2. Build to test changes: `make build`
+  3. Run doctests: `./sage -t modified_file.py`
+  4. Commit changes: `git add . && git commit -m "Description"`
+  5. Push and create pull request
+
+- **Keep up with develop branch**:
+  ```bash
+  git checkout develop
+  git pull origin develop
+  git checkout feature/my-feature
+  git rebase develop  # or merge if preferred
+  ```
+
 ## Validation
 
 ### Always Manually Validate Changes
@@ -204,10 +257,32 @@ Always run these before committing changes:
 
 ### Build Progress Indicators
 During build, you'll see packages being compiled in this typical order:
-1. **Base toolchain** (zlib, mpfr, mpc, gcc if needed) - 10-20 minutes
-2. **Mathematical libraries** (m4ri, flint, pari, etc.) - 20-40 minutes  
-3. **Higher-level packages** (python, ecl, gap, etc.) - 20-30 minutes
-4. **SageMath core** (sagelib, documentation) - 10-20 minutes
+1. **Base toolchain** (zlib, mpfr, mpc, gcc if needed) - First 10-20 minutes
+2. **Mathematical libraries** (m4ri, gf2x, flint, pari, etc.) - Next 20-40 minutes  
+3. **Higher-level packages** (python, ecl, gap, etc.) - Next 20-30 minutes
+4. **SageMath core** (sagelib, documentation) - Final 10-20 minutes
+
+**Current validated build progress** (as of testing):
+- Bootstrap: 1 minute ✓
+- Configure: 30 seconds ✓  
+- Base toolchain (mpfr, mpc): ~8 minutes ✓
+- Mathematical libraries (m4ri, gf2x): ~15 minutes ✓  
+- FLINT (number theory): ~21 minutes ✓
+- eclib (elliptic curves): ~27 minutes ✓ (in progress)
+
+This progression validates our 60-90 minute total build estimate.
+
+### Monitoring Build Progress
+```bash
+# Watch build in real-time (run in separate terminal)
+tail -f logs/install.log
+
+# Check what package is currently building
+grep "Setting up build directory" logs/install.log | tail -5
+
+# Check for any build errors
+grep -i error logs/install.log
+```
 
 ## Environment Setup
 
@@ -235,29 +310,59 @@ source ./.homebrew-build-env
 - **Build fails**: Check `logs/install.log` for detailed error messages
 - **Long build times**: This is normal - Sage builds many mathematical libraries from source
 - **Test failures**: 2-3 test failures are typically acceptable in complex mathematical software
+- **Out of disk space**: Sage build requires several GB (5-10GB recommended)
+- **Out of memory**: 4GB+ RAM recommended, 8GB+ for comfortable development
+
+### Build Logs and Debugging
+- **Main build log**: `logs/install.log` - Contains complete build output
+- **Individual package logs**: `logs/pkgs/PACKAGE_NAME.log` 
+- **Real-time monitoring**: `tail -f logs/install.log` (run in separate terminal)
+- **Check build progress**: Build outputs show current package being compiled
+- **Build failure debugging**: Look for `ERROR` entries in logs
+
+### Performance Optimization
+```bash
+# Use all CPU cores for faster builds
+export MAKEFLAGS="-j$(nproc) -l$(nproc).5"
+
+# Use ccache for faster rebuilds (optional)
+./configure --enable-ccache
+
+# Reduce build verbosity (optional)
+export V=0
+```
 
 ### Clean Rebuild
 If build issues persist:
 ```bash
-make distclean
-make configure
+make distclean      # Clean everything (takes ~1 minute)
+make configure      # Re-bootstrap (takes ~1 minute)  
 ./configure --enable-build-as-root
-make build
+make build          # Full rebuild (takes 60-90 minutes)
 ```
 
 ## Repository Structure
 
 ### Main Components
-- **Core mathematics**: Number theory, algebra, geometry, calculus
-- **Interfaces**: Wrappers for external mathematical software
-- **Graphics**: 2D and 3D plotting capabilities
-- **Notebooks**: Jupyter notebook integration
-- **Documentation**: Comprehensive mathematical documentation
+- **Core mathematics**: Number theory, algebra, geometry, calculus, combinatorics
+- **Interfaces**: Wrappers for external mathematical software (GAP, PARI, Maxima, etc.)
+- **Graphics**: 2D and 3D plotting capabilities (matplotlib, tachyon, etc.)
+- **Notebooks**: Jupyter notebook integration for interactive mathematics
+- **Documentation**: Comprehensive mathematical documentation system
 
 ### Package System
-Sage uses a sophisticated package management system with:
-- **Standard packages**: Core mathematical functionality
-- **Optional packages**: Additional mathematical tools
-- **Experimental packages**: Cutting-edge mathematical software
+Sage uses a sophisticated package management system located in `build/pkgs/`:
+- **Standard packages** (`type: standard`): Core mathematical functionality, always built
+- **Optional packages** (`type: optional`): Additional mathematical tools, install with `./sage -i package`
+- **Experimental packages** (`type: experimental`): Cutting-edge mathematical software
+
+### Key Mathematical Libraries Built During Installation
+- **MPFR, MPC**: Multi-precision floating-point arithmetic
+- **FLINT**: Fast Library for Number Theory  
+- **PARI/GP**: Computer algebra system for number theory
+- **GAP**: Groups, Algorithms, Programming - computational discrete algebra
+- **Maxima**: Symbolic computation system
+- **SingularL**: Computer algebra system for polynomial computations
+- **And 100+ other specialized mathematical packages**
 
 This build system ensures Sage can be built consistently across different platforms while providing access to a vast ecosystem of mathematical software.
