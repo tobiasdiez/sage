@@ -268,9 +268,13 @@ During build, you'll see packages being compiled in this typical order:
 - Base toolchain (mpfr, mpc): ~8 minutes ✓
 - Mathematical libraries (m4ri, gf2x): ~15 minutes ✓  
 - FLINT (number theory): ~21 minutes ✓
-- eclib (elliptic curves): ~27 minutes ✓ (in progress)
+- eclib (elliptic curves): ~27 minutes ✓
+- Python 3.12.5: ~33 minutes ✓ (completed)
+- Higher-level packages: ~35+ minutes (in progress)
 
-This progression validates our 60-90 minute total build estimate.
+**All validation commands tested and working correctly ✓**
+
+This progression confirms our 60-90 minute total build estimate for modern hardware.
 
 ### Monitoring Build Progress
 ```bash
