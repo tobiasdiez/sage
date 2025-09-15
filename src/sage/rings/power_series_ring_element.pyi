@@ -1,5 +1,12 @@
-from typing import Any, List, Optional, Union, Iterator
+from typing import Any, List, Optional, Union, Iterator, Dict, Tuple
 from sage.structure.element import AlgebraElement
+
+# Type aliases for better specificity
+SageInteger = Union['sage.rings.integer.Integer', int]
+SageNumber = Union['sage.rings.rational.Rational', SageInteger, 'sage.structure.element.RingElement']
+PowerSeriesRing = Any  # Will be refined when power_series_ring.pyi is created
+Variable = Any
+Polynomial = Any
 
 def is_PowerSeries(x: Any) -> bool:
     ...
