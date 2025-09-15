@@ -14,15 +14,15 @@ This file tracks the progress of creating Python type stub files (.pyi) for all 
 #### Basic Ring Classes
 - [ ] ./src/sage/rings/ring.pyx
 - [ ] ./src/sage/rings/rational.pyx
-- [ ] ./src/sage/rings/real_mpfr.pyx
+- [x] ./src/sage/rings/real_mpfr.pyx
 - [ ] ./src/sage/rings/real_mpfi.pyx
 - [ ] ./src/sage/rings/real_double.pyx
 - [ ] ./src/sage/rings/real_double_element_gsl.pyx
 - [ ] ./src/sage/rings/real_arb.pyx
 - [ ] ./src/sage/rings/real_interval_absolute.pyx
 - [ ] ./src/sage/rings/real_lazy.pyx
-- [ ] ./src/sage/rings/fast_arith.pyx
-- [ ] ./src/sage/rings/factorint.pyx
+- [x] ./src/sage/rings/fast_arith.pyx (already exists)
+- [x] ./src/sage/rings/factorint.pyx (already exists)
 - [ ] ./src/sage/rings/factorint_flint.pyx
 - [ ] ./src/sage/rings/laurent_series_ring_element.pyx
 - [ ] ./src/sage/rings/power_series_ring_element.pyx
@@ -48,7 +48,7 @@ This file tracks the progress of creating Python type stub files (.pyi) for all 
 - [ ] ./src/sage/rings/finite_rings/hom_finite_field.pyx
 - [ ] ./src/sage/rings/finite_rings/hom_finite_field_givaro.pyx
 - [ ] ./src/sage/rings/finite_rings/hom_prime_finite_field.pyx
-- [ ] ./src/sage/rings/finite_rings/integer_mod.pyx
+- [x] ./src/sage/rings/finite_rings/integer_mod.pyx
 - [ ] ./src/sage/rings/finite_rings/residue_field.pyx
 - [ ] ./src/sage/rings/finite_rings/residue_field_givaro.pyx
 - [ ] ./src/sage/rings/finite_rings/residue_field_ntl_gf2e.pyx
