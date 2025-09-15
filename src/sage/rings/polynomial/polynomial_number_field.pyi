@@ -1,0 +1,13 @@
+from typing import Any
+
+class Polynomial_absolute_number_field_dense(Polynomial_generic_dense_field):
+    def __init__(self: Any, parent: Any, x: Any = ..., check: Any = ..., is_gen: Any = ..., construct: Any = ...) -> Any:
+        ...
+    def gcd(self: Any, other: Any) -> Any:
+        ...
+
+class Polynomial_relative_number_field_dense(Polynomial_generic_dense_field):
+    def __init__(self: Any, parent: Any, x: Any = ..., check: Any = ..., is_gen: Any = ..., construct: Any = ...) -> Any:
+        ...
+    def gcd(self: Any, other: Any) -> Any:
+        ...

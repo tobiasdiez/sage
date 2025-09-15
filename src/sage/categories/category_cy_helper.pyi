@@ -1,0 +1,19 @@
+from typing import Any
+
+def category_sort_key(category: Any) -> Any:
+    ...
+
+def join_as_tuple(categories: Any, axioms: Any, ignore_axioms: Any) -> Tuple[Any, ...]:
+    ...
+
+def get_axiom_index(all_axioms: Any, axiom: Any) -> Any:
+    ...
+
+def canonicalize_axioms(all_axioms: Any, axioms: Any) -> Tuple[Any, ...]:
+    ...
+
+class AxiomContainer(dict):
+    def add(self: Any, axiom: Any) -> Any:
+        ...
+    def __iadd__(self: Any, L: Any) -> Any:
+        ...

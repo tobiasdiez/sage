@@ -157,6 +157,10 @@ def parse_function_signature(line: str) -> Optional[Dict[str, str]]:
                     
                 # Simple parameter name extraction
                 # Remove type annotations for now and just extract the parameter name
+                # Handle Cython-specific syntax like "param not None"
+                if ' not None' in param:
+                    param = param.replace(' not None', '')
+                
                 if ' ' in param:
                     # Has type annotation, get the last word as parameter name
                     parts = param.split()

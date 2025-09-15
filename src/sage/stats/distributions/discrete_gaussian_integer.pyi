@@ -1,0 +1,9 @@
+from typing import Any
+
+class DiscreteGaussianDistributionIntegerSampler(SageObject):
+    def __init__(self: Any, sigma: Any, c: Any = ..., tau: Any = ..., algorithm: Any = ..., precision: Any = ...) -> Any:
+        ...
+    def __dealloc__(self: Any) -> Any:
+        ...
+    def __call__(self: Any) -> Any:
+        ...

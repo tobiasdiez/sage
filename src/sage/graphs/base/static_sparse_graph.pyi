@@ -1,0 +1,13 @@
+from typing import Any
+
+def tarjan_strongly_connected_components(G: Any) -> Any:
+    ...
+
+def strongly_connected_components_digraph(G: Any) -> Any:
+    ...
+
+def triangles_count(G: Any) -> Any:
+    ...
+
+def spectral_radius(G: Any, prec: Any = ...) -> Any:
+    ...

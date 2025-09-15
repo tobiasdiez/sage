@@ -1,0 +1,16 @@
+from typing import Any
+
+def dist(X: Any) -> Any:
+    ...
+
+def is_long_hole_free(g: Any, certificate: Any = ...) -> Any:
+    ...
+
+def dist(X: Any) -> Any:
+    ...
+
+def is_long_antihole_free(g: Any, certificate: Any = ...) -> Any:
+    ...
+
+def is_weakly_chordal(g: Any, certificate: Any = ...) -> Any:
+    ...

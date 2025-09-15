@@ -1,0 +1,19 @@
+from typing import Any
+
+def isqrt(n: Any) -> Any:
+    ...
+
+def from_man_exp(man: Any, exp: Any, prec: Any = ..., rnd: Any = ...) -> Any:
+    ...
+
+def normalize(sign: Any, man: Any, exp: Any, bc: Any, prec: Any, rnd: Any) -> Any:
+    ...
+
+def mpmath_to_sage(x: Any, prec: Any) -> Any:
+    ...
+
+def sage_to_mpmath(x: Any, prec: Any) -> Any:
+    ...
+
+def call(func: Any) -> Any:
+    ...

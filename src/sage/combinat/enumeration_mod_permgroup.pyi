@@ -1,0 +1,16 @@
+from typing import Any
+
+def all_children(v: Any, max_part: Any) -> List[Any]:
+    ...
+
+def is_canonical(sgs: Any, v: Any) -> bool:
+    ...
+
+def canonical_representative_of_orbit_of(sgs: Any, v: Any) -> Any:
+    ...
+
+def canonical_children(sgs: Any, v: Any, max_part: Any) -> List[Any]:
+    ...
+
+def orbit(sgs: Any, v: Any) -> Any:
+    ...

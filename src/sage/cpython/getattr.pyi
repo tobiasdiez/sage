@@ -1,0 +1,16 @@
+from typing import Any
+
+def raw_getattr(obj: Any, name: Any) -> Any:
+    ...
+
+def getattr_from_other_class(self: Any, cls: Any, name: Any) -> Any:
+    ...
+
+def dir_with_other_class(self: Any) -> Any:
+    ...
+
+class AttributeErrorMessage:
+    def __init__(self: Any, obj: Any = ..., name: Any = ...) -> Any:
+        ...
+    def __repr__(self: Any) -> Any:
+        ...

@@ -1,0 +1,13 @@
+from typing import Any
+
+def test_valuation(a: Any, p: Any) -> Any:
+    ...
+
+def test_padic_square(a: Any, p: Any) -> Any:
+    ...
+
+def test_qpls(a: Any, b: Any, c: Any, d: Any, e: Any, p: Any) -> Any:
+    ...
+
+def test_els(a: Any, b: Any, c: Any, d: Any, e: Any) -> Any:
+    ...

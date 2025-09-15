@@ -1,0 +1,13 @@
+from typing import Any
+
+def lyndon_word_iterator(n: Any, k: Any) -> Any:
+    ...
+
+def perfect_matchings_iterator(n: Any) -> Any:
+    ...
+
+def set_partition_composition(sp1: Any, sp2: Any) -> Any:
+    ...
+
+def conjugate(p: Any) -> Any:
+    ...

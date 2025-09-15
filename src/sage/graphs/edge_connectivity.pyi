@@ -1,0 +1,9 @@
+from typing import Any
+
+class GabowEdgeConnectivity:
+    def __init__(self: Any, G: Any, dfs_preprocessing: Any = ..., use_rec: Any = ...) -> Any:
+        ...
+    def edge_connectivity(self: Any) -> Any:
+        ...
+    def edge_disjoint_spanning_trees(self: Any) -> Any:
+        ...

@@ -1,0 +1,13 @@
+from typing import Any
+
+def first_hilbert_series(I: Any, grading: Any = ..., return_grading: Any = ...) -> Any:
+    ...
+
+def hilbert_poincare_series(I: Any, grading: Any = ...) -> Any:
+    ...
+
+class Node:
+    def __cinit__(self: Any) -> Any:
+        ...
+    def __dealloc__(self: Any) -> Any:
+        ...

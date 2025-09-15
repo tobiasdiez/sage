@@ -1,0 +1,9 @@
+from typing import Any
+
+class Matrix_double_sparse(Matrix_generic_sparse):
+    def is_hermitian(self: Any, tolerance: Any = ...) -> Any:
+        ...
+    def is_skew_hermitian(self: Any, tolerance: Any = ...) -> Any:
+        ...
+    def cholesky(self: Any) -> Any:
+        ...

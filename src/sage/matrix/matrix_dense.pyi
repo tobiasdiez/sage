@@ -1,0 +1,9 @@
+from typing import Any
+
+class Matrix_dense(matrix.Matrix):
+    def __copy__(self: Any) -> Any:
+        ...
+    def transpose(self: Any) -> Any:
+        ...
+    def antitranspose(self: Any) -> Any:
+        ...

@@ -1,0 +1,13 @@
+from typing import Any
+
+def is_line_graph(g: Any, certificate: Any = ...) -> Any:
+    ...
+
+def get_certificate(gg: Any) -> Any:
+    ...
+
+def line_graph(g: Any, labels: Any = ..., return_labels: Any = ..., immutable: Any = ...) -> Any:
+    ...
+
+def root_graph(g: Any, verbose: Any = ..., immutable: Any = ...) -> Any:
+    ...

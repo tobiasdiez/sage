@@ -1,0 +1,13 @@
+from typing import Any
+
+def xsrange(start: Any, end: Any = ..., step: Any = ..., universe: Any = ..., coerce: Any = ..., include_endpoint: Any = ..., endpoint_tolerance: Any = ...) -> Any:
+    ...
+
+def srange() -> Any:
+    ...
+
+def ellipsis_iter(step: Any = ...) -> Any:
+    ...
+
+def ellipsis_range(step: Any = ...) -> Any:
+    ...

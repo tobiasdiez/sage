@@ -1,0 +1,13 @@
+from typing import Any
+
+def cy_add1_internal(bla: Any) -> Any:
+    ...
+
+def cy_add1_immutable(bla: Any) -> Any:
+    ...
+
+def cy_add1_mutable(bla: Any) -> Any:
+    ...
+
+def cy_add1_with(bla: Any) -> Any:
+    ...

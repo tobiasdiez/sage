@@ -1,0 +1,13 @@
+from typing import Any
+
+def two_squares_pyx(n: Any) -> Any:
+    ...
+
+def is_sum_of_two_squares_pyx(n: Any) -> Any:
+    ...
+
+def three_squares_pyx(n: Any) -> Any:
+    ...
+
+def four_squares_pyx(n: Any) -> Any:
+    ...
