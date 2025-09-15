@@ -25,7 +25,7 @@ This file tracks the progress of creating Python type stub files (.pyi) for all 
 - [x] ./src/sage/rings/factorint.pyx (already exists)
 - [ ] ./src/sage/rings/factorint_flint.pyx
 - [ ] ./src/sage/rings/laurent_series_ring_element.pyx
-- [ ] ./src/sage/rings/power_series_ring_element.pyx
+- [x] ./src/sage/rings/power_series_ring_element.pyx
 - [ ] ./src/sage/rings/power_series_mpoly.pyx
 - [ ] ./src/sage/rings/power_series_pari.pyx
 - [ ] ./src/sage/rings/power_series_poly.pyx
@@ -100,7 +100,7 @@ This file tracks the progress of creating Python type stub files (.pyi) for all 
 - [ ] ./src/sage/rings/polynomial/hilbert.pyx
 - [ ] ./src/sage/rings/polynomial/laurent_polynomial.pyx
 - [ ] ./src/sage/rings/polynomial/laurent_polynomial_mpair.pyx
-- [ ] ./src/sage/rings/polynomial/multi_polynomial.pyx
+- [x] ./src/sage/rings/polynomial/multi_polynomial.pyx
 - [ ] ./src/sage/rings/polynomial/multi_polynomial_ideal_libsingular.pyx
 - [ ] ./src/sage/rings/polynomial/multi_polynomial_libsingular.pyx
 - [ ] ./src/sage/rings/polynomial/multi_polynomial_ring_base.pyx
@@ -110,7 +110,7 @@ This file tracks the progress of creating Python type stub files (.pyi) for all 
 - [ ] ./src/sage/rings/polynomial/polydict.pyx
 - [ ] ./src/sage/rings/polynomial/polynomial_compiled.pyx
 - [ ] ./src/sage/rings/polynomial/polynomial_complex_arb.pyx
-- [ ] ./src/sage/rings/polynomial/polynomial_element.pyx
+- [x] ./src/sage/rings/polynomial/polynomial_element.pyx
 - [ ] ./src/sage/rings/polynomial/polynomial_gf2x.pyx
 - [ ] ./src/sage/rings/polynomial/polynomial_integer_dense_flint.pyx
 - [ ] ./src/sage/rings/polynomial/polynomial_integer_dense_ntl.pyx
