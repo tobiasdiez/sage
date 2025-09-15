@@ -1,52 +1,53 @@
-from typing import Any
+from typing import Any, Optional, Tuple, Dict, List, Union
+from sage.structure.element import MultiplicativeGroupElement
 
-def make_permgroup_element(G: Any, x: Any) -> Any:
+def make_permgroup_element(G: Any, x: Any) -> 'PermutationGroupElement':
     ...
 
-def make_permgroup_element_v2(G: Any, x: Any, domain: Any) -> Any:
+def make_permgroup_element_v2(G: Any, x: Any, domain: Any) -> 'PermutationGroupElement':
     ...
 
-def is_PermutationGroupElement(x: Any) -> Any:
+def is_PermutationGroupElement(x: Any) -> bool:
     ...
 
 class PermutationGroupElement(MultiplicativeGroupElement):
-    def __dealloc__(self: Any) -> Any:
+    def __dealloc__(self) -> None:
         ...
-    def __init__(self: Any, g: Any, parent: Any, check: Any = ...) -> Any:
+    def __init__(self, g: Any, parent: Any, check: bool = True) -> None:
         ...
-    def __reduce__(self: Any) -> Any:
+    def __reduce__(self) -> Tuple[Any, ...]:
         ...
-    def __getitem__(self: Any, i: Any) -> Any:
+    def __getitem__(self, i: int) -> int:
         ...
-    def __call__(self: Any, i: Any) -> Any:
+    def __call__(self, i: int) -> int:
         ...
-    def __mul__(left: Any, right: Any) -> Any:
+    def __mul__(left: 'PermutationGroupElement', right: 'PermutationGroupElement') -> 'PermutationGroupElement':
         ...
-    def __invert__(self: Any) -> Any:
+    def __invert__(self) -> 'PermutationGroupElement':
         ...
-    def domain(self: Any) -> Any:
+    def domain(self) -> List[int]:
         ...
-    def __hash__(self: Any) -> Any:
+    def __hash__(self) -> int:
         ...
-    def tuple(self: Any) -> Any:
+    def tuple(self) -> Tuple[int, ...]:
         ...
-    def dict(self: Any) -> Any:
+    def dict(self) -> Dict[int, int]:
         ...
-    def multiplicative_order(self: Any) -> Any:
+    def multiplicative_order(self) -> int:
         ...
-    def inverse(self: Any) -> Any:
+    def inverse(self) -> 'PermutationGroupElement':
         ...
-    def sign(self: Any) -> Any:
+    def sign(self) -> int:
         ...
-    def orbit(self: Any, n: Any, sorted: Any = ...) -> Any:
+    def orbit(self, n: int, sorted: bool = True) -> List[int]:
         ...
-    def cycles(self: Any) -> Any:
+    def cycles(self) -> List[Tuple[int, ...]]:
         ...
-    def cycle_tuples(self: Any, singletons: Any = ...) -> Any:
+    def cycle_tuples(self, singletons: bool = True) -> List[Tuple[int, ...]]:
         ...
-    def cycle_string(self: Any, singletons: Any = ...) -> Any:
+    def cycle_string(self, singletons: bool = True) -> str:
         ...
-    def cycle_type(self: Any, singletons: Any = ..., as_list: Any = ...) -> Any:
+    def cycle_type(self, singletons: bool = True, as_list: bool = False) -> Union[List[int], Tuple[int, ...]]:
         ...
     def matrix(self: Any) -> Any:
         ...

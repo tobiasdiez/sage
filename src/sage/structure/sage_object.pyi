@@ -1,25 +1,25 @@
-from typing import Any
+from typing import Any, Optional
 
 class SageObject:
-    def rename(self: Any, x: Any = ...) -> Any:
+    def rename(self, x: Optional[str] = None) -> None:
         ...
-    def reset_name(self: Any) -> Any:
+    def reset_name(self) -> None:
         ...
-    def get_custom_name(self: Any) -> Any:
+    def get_custom_name(self) -> Optional[str]:
         ...
-    def __repr__(self: Any) -> Any:
+    def __repr__(self) -> str:
         ...
-    def __hash__(self: Any) -> Any:
+    def __hash__(self) -> int:
         ...
-    def save(self: Any, filename: Any = ..., compress: Any = ...) -> Any:
+    def save(self, filename: Optional[str] = None, compress: bool = True) -> None:
         ...
-    def dump(self: Any, filename: Any, compress: Any = ...) -> Any:
+    def dump(self, filename: str, compress: bool = True) -> None:
         ...
-    def dumps(self: Any, compress: Any = ...) -> Any:
+    def dumps(self, compress: bool = True) -> str:
         ...
-    def category(self: Any) -> Any:
+    def category(self) -> Any:
         ...
-    def parent(self: Any) -> Any:
+    def parent(self) -> Any:
         ...
-    def __pari__(self: Any) -> Any:
+    def __pari__(self) -> Any:
         ...

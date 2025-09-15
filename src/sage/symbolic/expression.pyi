@@ -1,24 +1,19 @@
-from typing import Any
+from typing import Any, Optional, List, Tuple, Union, Dict
+from sage.structure.element import Expression as Expression_abc
 
-def round(self: Any) -> Any:
+def power(self: 'Expression', exp: Any, hold: bool = False) -> 'Expression':
     ...
 
-def function(self: Any) -> Any:
+def add(self: 'Expression', hold: bool = False) -> 'Expression':
     ...
 
-def power(self: Any, exp: Any, hold: Any = ...) -> Any:
+def mul(self: 'Expression', hold: bool = False) -> 'Expression':
     ...
 
-def add(self: Any, hold: Any = ...) -> Any:
+def coefficient(self: 'Expression', s: Any, n: int = 1) -> Any:
     ...
 
-def mul(self: Any, hold: Any = ...) -> Any:
-    ...
-
-def coefficient(self: Any, s: Any, n: Any = ...) -> Any:
-    ...
-
-def coefficients(self: Any, x: Any = ..., sparse: Any = ...) -> Any:
+def coefficients(self: 'Expression', x: Optional[Any] = None, sparse: bool = True) -> List[Tuple[Any, int]]:
     ...
 
 def list(self: Any, x: Any = ...) -> Any:
