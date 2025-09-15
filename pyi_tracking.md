@@ -24,7 +24,7 @@ This file tracks the progress of creating Python type stub files (.pyi) for all 
 - [x] ./src/sage/rings/fast_arith.pyx (already exists)
 - [x] ./src/sage/rings/factorint.pyx (already exists)
 - [ ] ./src/sage/rings/factorint_flint.pyx
-- [ ] ./src/sage/rings/laurent_series_ring_element.pyx
+- [x] ./src/sage/rings/laurent_series_ring_element.pyx (already exists)
 - [x] ./src/sage/rings/power_series_ring_element.pyx
 - [ ] ./src/sage/rings/power_series_mpoly.pyx
 - [ ] ./src/sage/rings/power_series_pari.pyx
@@ -55,7 +55,7 @@ This file tracks the progress of creating Python type stub files (.pyi) for all 
 - [ ] ./src/sage/rings/finite_rings/residue_field_pari_ffelt.pyx
 
 #### Number Fields
-- [ ] ./src/sage/rings/number_field/number_field_element.pyx
+- [x] ./src/sage/rings/number_field/number_field_element.pyx
 - [ ] ./src/sage/rings/number_field/number_field_element_base.pyx
 - [ ] ./src/sage/rings/number_field/number_field_element_quadratic.pyx
 - [ ] ./src/sage/rings/number_field/number_field_morphisms.pyx
