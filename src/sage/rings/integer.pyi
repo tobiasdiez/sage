@@ -1,3 +1,4 @@
+from typing import Any, List, Optional, Tuple, Union, Iterator
 from sage.libs.gmp.types import __mpz_struct, mpz_t, mpz_ptr
 from sage.libs.gmp.mpz import mpz_set
 
@@ -19,13 +20,13 @@ class Integer(EuclideanDomainElement):
     def _shift_helper(self, y: object, sign: int) -> object:
         ...
 
-    def _add_(self, other: object) -> object:
+    def _add_(self, other: 'Integer') -> 'Integer':
         ...
 
-    def _mul_(self, other: object) -> object:
+    def _mul_(self, other: 'Integer') -> 'Integer':
         ...
 
-    def _pow_(self, other: object) -> object:
+    def _pow_(self, other: 'Integer') -> 'Integer':
         ...
 
     def _and(self, other: 'Integer') -> 'Integer':
@@ -55,7 +56,98 @@ class Integer(EuclideanDomainElement):
     def _is_power_of(self, n: 'Integer') -> bool:
         ...
 
-    def _pseudoprime_is_prime(self, proof: object) -> bool:
+    def _pseudoprime_is_prime(self, proof: bool = True) -> bool:
+        ...
+
+    # Public methods
+    def list(self) -> List['Integer']:
+        ...
+
+    def str(self, base: int = 10) -> str:
+        ...
+
+    def ordinal_str(self) -> str:
+        ...
+
+    def hex(self) -> str:
+        ...
+
+    def oct(self) -> str:
+        ...
+
+    def binary(self) -> str:
+        ...
+
+    def bits(self) -> List[int]:
+        ...
+
+    def bit_length(self) -> int:
+        ...
+
+    def nbits(self) -> int:
+        ...
+
+    def trailing_zero_bits(self) -> int:
+        ...
+
+    def digits(self, base: int = 10, digits: Optional[Any] = None, padto: int = 0) -> List[int]:
+        ...
+
+    def balanced_digits(self, base: int = 10, positive_shift: bool = True) -> List[int]:
+        ...
+
+    def ndigits(self, base: int = 10) -> int:
+        ...
+
+    def nth_root(self, n: int, truncate_mode: bool = False) -> 'Integer':
+        ...
+
+    def exact_log(self, m: 'Integer') -> int:
+        ...
+
+    def log(self, m: Optional['Integer'] = None, prec: Optional[int] = None) -> Any:
+        ...
+
+    def exp(self, prec: Optional[int] = None) -> Any:
+        ...
+
+    def prime_to_m_part(self, m: 'Integer') -> 'Integer':
+        ...
+
+    def prime_divisors(self) -> List['Integer']:
+        ...
+
+    def divisors(self, method: Optional[str] = None) -> List['Integer']:
+        ...
+
+    def factor(self, proof: Optional[bool] = None, limit: Optional[int] = None, int_: bool = False, trial_division: bool = True, watch: Optional[Any] = None, **kwds: Any) -> Any:
+        ...
+
+    def gcd(self, other: 'Integer') -> 'Integer':
+        ...
+
+    def lcm(self, other: 'Integer') -> 'Integer':
+        ...
+
+    def is_prime(self, proof: bool = True) -> bool:
+        ...
+
+    def is_power(self, n: Optional[int] = None, proof: bool = True) -> Union[bool, Tuple['Integer', int]]:
+        ...
+
+    def is_perfect_power(self) -> bool:
+        ...
+
+    def is_square(self) -> bool:
+        ...
+
+    def sqrt(self, prec: Optional[int] = None, extend: bool = True, all: bool = False) -> Any:
+        ...
+
+    def isqrt(self) -> 'Integer':
+        ...
+
+    def abs(self) -> 'Integer':
         ...
 
 def mpz_set_str_python(z: mpz_ptr, s: str, base: int) -> int:

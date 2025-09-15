@@ -1,60 +1,61 @@
-from typing import Any
+from typing import Any, Optional, Tuple
+from sage.structure.sage_object import SageObject
 
 def make_element(_class: Any, _dict: Any, parent: Any) -> Any:
     ...
 
-def is_Element(x: Any) -> Any:
+def is_Element(x: Any) -> bool:
     ...
 
-def is_ModuleElement(x: Any) -> Any:
+def is_ModuleElement(x: Any) -> bool:
     ...
 
-def is_MonoidElement(x: Any) -> Any:
+def is_MonoidElement(x: Any) -> bool:
     ...
 
-def is_AdditiveGroupElement(x: Any) -> Any:
+def is_AdditiveGroupElement(x: Any) -> bool:
     ...
 
-def is_MultiplicativeGroupElement(x: Any) -> Any:
+def is_MultiplicativeGroupElement(x: Any) -> bool:
     ...
 
-def is_RingElement(x: Any) -> Any:
+def is_RingElement(x: Any) -> bool:
     ...
 
-def is_CommutativeRingElement(x: Any) -> Any:
+def is_CommutativeRingElement(x: Any) -> bool:
     ...
 
-def is_Vector(x: Any) -> Any:
+def is_Vector(x: Any) -> bool:
     ...
 
-def is_Matrix(x: Any) -> Any:
+def is_Matrix(x: Any) -> bool:
     ...
 
-def is_IntegralDomainElement(x: Any) -> Any:
+def is_IntegralDomainElement(x: Any) -> bool:
     ...
 
-def is_DedekindDomainElement(x: Any) -> Any:
+def is_DedekindDomainElement(x: Any) -> bool:
     ...
 
-def is_PrincipalIdealDomainElement(x: Any) -> Any:
+def is_PrincipalIdealDomainElement(x: Any) -> bool:
     ...
 
-def is_EuclideanDomainElement(x: Any) -> Any:
+def is_EuclideanDomainElement(x: Any) -> bool:
     ...
 
-def is_FieldElement(x: Any) -> Any:
+def is_FieldElement(x: Any) -> bool:
     ...
 
-def is_AlgebraElement(x: Any) -> Any:
+def is_AlgebraElement(x: Any) -> bool:
     ...
 
-def is_CommutativeAlgebraElement(x: Any) -> Any:
+def is_CommutativeAlgebraElement(x: Any) -> bool:
     ...
 
-def is_InfinityElement(x: Any) -> Any:
+def is_InfinityElement(x: Any) -> bool:
     ...
 
-def canonical_coercion(x: Any, y: Any) -> Any:
+def canonical_coercion(x: Any, y: Any) -> Tuple[Any, Any]:
     ...
 
 def bin_op(x: Any, y: Any, op: Any) -> Any:
@@ -63,7 +64,7 @@ def bin_op(x: Any, y: Any, op: Any) -> Any:
 def get_coercion_model() -> Any:
     ...
 
-def coercion_traceback(dump: Any = ...) -> Any:
+def coercion_traceback(dump: bool = False) -> Any:
     ...
 
 def coerce_binop(method: Any) -> Any:
@@ -75,49 +76,49 @@ def new_method(self: Any, other: Any) -> Any:
 class Element(SageObject):
     def __getmetaclass__(_: Any) -> Any:
         ...
-    def __init__(self: Any, parent: Any) -> Any:
+    def __init__(self, parent: Any) -> None:
         ...
-    def __getattr__(self: Any, name: Any) -> Any:
+    def __getattr__(self, name: str) -> Any:
         ...
-    def __dir__(self: Any) -> Any:
+    def __dir__(self) -> list[str]:
         ...
-    def __getstate__(self: Any) -> Any:
+    def __getstate__(self) -> dict[str, Any]:
         ...
-    def __setstate__(self: Any, state: Any) -> Any:
+    def __setstate__(self, state: dict[str, Any]) -> None:
         ...
-    def __copy__(self: Any) -> Any:
+    def __copy__(self) -> 'Element':
         ...
-    def base_extend(self: Any, R: Any) -> Any:
+    def base_extend(self, R: Any) -> Any:
         ...
-    def base_ring(self: Any) -> Any:
+    def base_ring(self) -> Any:
         ...
-    def category(self: Any) -> Any:
+    def category(self) -> Any:
         ...
-    def parent(self: Any, x: Any = ...) -> Any:
+    def parent(self, x: Any = None) -> Any:
         ...
-    def subs(self: Any, in_dict: Any = ...) -> Any:
+    def subs(self, in_dict: Optional[dict] = None, **kwds: Any) -> Any:
         ...
-    def substitute(self: Any) -> Any:
+    def substitute(self, **kwds: Any) -> Any:
         ...
-    def numerical_approx(self: Any, prec: Any = ..., digits: Any = ..., algorithm: Any = ...) -> Any:
+    def numerical_approx(self, prec: Optional[int] = None, digits: Optional[int] = None, algorithm: Optional[str] = None) -> Any:
         ...
-    def n(self: Any, prec: Any = ..., digits: Any = ..., algorithm: Any = ...) -> Any:
+    def n(self, prec: Optional[int] = None, digits: Optional[int] = None, algorithm: Optional[str] = None) -> Any:
         ...
-    def __xor__(self: Any, right: Any) -> Any:
+    def __xor__(self, right: Any) -> Any:
         ...
-    def __pos__(self: Any) -> Any:
+    def __pos__(self) -> 'Element':
         ...
-    def __bool__(self: Any) -> Any:
+    def __bool__(self) -> bool:
         ...
-    def is_zero(self: Any) -> Any:
+    def is_zero(self) -> bool:
         ...
-    def __richcmp__(self: Any, other: Any, op: Any) -> Any:
+    def __richcmp__(self, other: Any, op: int) -> bool:
         ...
     def __add__(left: Any, right: Any) -> Any:
         ...
     def __sub__(left: Any, right: Any) -> Any:
         ...
-    def __neg__(self: Any) -> Any:
+    def __neg__(self) -> 'Element':
         ...
     def __mul__(left: Any, right: Any) -> Any:
         ...
@@ -129,16 +130,16 @@ class Element(SageObject):
         ...
     def __mod__(left: Any, right: Any) -> Any:
         ...
-    def __pow__(left: Any, right: Any, modulus: Any) -> Any:
+    def __pow__(left: Any, right: Any, modulus: Any = None) -> Any:
         ...
 
 class ElementWithCachedMethod(Element):
     ...
 
 class ModuleElement(Element):
-    def order(self: Any) -> Any:
+    def order(self) -> Any:
         ...
-    def additive_order(self: Any) -> Any:
+    def additive_order(self) -> Any:
         ...
 
 class ModuleElementWithMutability(ModuleElement):
@@ -170,23 +171,23 @@ class MultiplicativeGroupElement(MonoidElement):
         ...
 
 class RingElement(ModuleElement):
-    def is_one(self: Any) -> Any:
+    def is_one(self) -> bool:
         ...
-    def powers(self: Any, n: Any) -> Any:
+    def powers(self, n: int) -> list['RingElement']:
         ...
-    def __divmod__(self: Any, other: Any) -> Any:
+    def __divmod__(self, other: 'RingElement') -> Tuple['RingElement', 'RingElement']:
         ...
-    def __invert__(self: Any) -> Any:
+    def __invert__(self) -> 'RingElement':
         ...
-    def additive_order(self: Any) -> Any:
+    def additive_order(self) -> Any:
         ...
-    def multiplicative_order(self: Any) -> Any:
+    def multiplicative_order(self) -> Any:
         ...
-    def is_nilpotent(self: Any) -> Any:
+    def is_nilpotent(self) -> bool:
         ...
-    def abs(self: Any) -> Any:
+    def abs(self) -> 'RingElement':
         ...
-    def is_prime(self: Any) -> Any:
+    def is_prime(self) -> bool:
         ...
 
 class CommutativeRingElement(RingElement):
