@@ -1,0 +1,36 @@
+from typing import Any
+
+def modify_for_nested_pickle(cls: Any, name_prefix: Any, module: Any, first_run: Any = ...) -> Any:
+    ...
+
+def nested_pickle(cls: Any) -> Any:
+    ...
+
+class NestedClassMetaclass(type):
+    def __init__(self: Any) -> Any:
+        ...
+
+class MainClass(metaclass=NestedClassMetaclass):
+    ...
+
+class NestedClass:
+    ...
+
+class NestedSubClass:
+    def dummy(self: Any, x: Any, r: Any = ...) -> Any:
+        ...
+
+class SubClass(MainClass):
+    ...
+
+class CopiedClass:
+    ...
+
+class A1:
+    ...
+
+class A2:
+    ...
+
+class A3:
+    ...

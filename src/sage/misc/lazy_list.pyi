@@ -1,0 +1,13 @@
+from typing import Any
+
+class lazy_list_generic:
+    ...
+
+class lazy_list_from_iterator(lazy_list_generic):
+    ...
+
+class lazy_list_from_function(lazy_list_generic):
+    ...
+
+class lazy_list_from_update_function(lazy_list_generic):
+    ...
