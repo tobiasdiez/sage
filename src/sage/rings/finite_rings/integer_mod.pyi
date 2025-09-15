@@ -1,209 +1,214 @@
-from typing import Any
+from typing import Any, List, Optional, Union, Tuple
+from sage.rings.finite_rings.finite_field_base import FiniteRingElement
+from sage.categories.morphism import Morphism
+from sage.categories.map import Map
+from sage.rings.integer import Integer
+from sage.rings.rational import Rational
 
-def Mod(n: Any, m: Any, parent: Any = ...) -> Any:
+def Mod(n: Any, m: Any, parent: Any = ...) -> "IntegerMod_abstract":
     ...
 
-def IntegerMod(parent: Any, value: Any) -> Any:
+def IntegerMod(parent: Any, value: Any) -> "IntegerMod_abstract":
     ...
 
-def is_IntegerMod(x: Any) -> Any:
+def is_IntegerMod(x: Any) -> bool:
     ...
 
-def square_root_mod_prime_power(a: Any, p: Any, e: Any) -> Any:
+def square_root_mod_prime_power(a: int, p: int, e: int) -> int:
     ...
 
-def square_root_mod_prime(a: Any, p: Any = ...) -> Any:
+def square_root_mod_prime(a: int, p: int = ...) -> int:
     ...
 
-def lucas_q1(mm: Any, P: Any) -> Any:
+def lucas_q1(mm: int, P: int) -> int:
     ...
 
-def lucas(k: Any, P: Any, Q: Any = ..., n: Any = ...) -> Any:
+def lucas(k: int, P: int, Q: int = ..., n: int = ...) -> int:
     ...
 
 class PariError(Exception):
     ...
 
 class NativeIntStruct:
-    def __cinit__(self: Any) -> Any:
+    def __cinit__(self) -> None:
         ...
-    def __init__(self: Any, m: Any) -> Any:
+    def __init__(self, m: int) -> None:
         ...
-    def __repr__(self: Any) -> Any:
+    def __repr__(self) -> str:
         ...
-    def __reduce__(self: Any) -> Any:
+    def __reduce__(self) -> Tuple[Any, ...]:
         ...
-    def precompute_table(self: Any, parent: Any) -> Any:
+    def precompute_table(self, parent: Any) -> None:
         ...
 
 class IntegerMod_abstract(FiniteRingElement):
-    def __init__(self: Any, parent: Any, value: Any = ...) -> Any:
+    def __init__(self, parent: Any, value: Any = ...) -> None:
         ...
-    def __abs__(self: Any) -> Any:
+    def __abs__(self) -> "IntegerMod_abstract":
         ...
-    def __reduce__(self: Any) -> Any:
+    def __reduce__(self) -> Tuple[Any, ...]:
         ...
-    def __mod__(self: Any, modulus: Any) -> Any:
+    def __mod__(self, modulus: Any) -> "IntegerMod_abstract":
         ...
-    def is_nilpotent(self: Any) -> Any:
+    def is_nilpotent(self) -> bool:
         ...
-    def __pari__(self: Any) -> Any:
+    def __pari__(self) -> Any:
         ...
-    def log(self: Any, b: Any = ..., order: Any = ..., check: Any = ...) -> Any:
+    def log(self, b: Any = ..., order: Optional[int] = ..., check: bool = ...) -> Any:
         ...
-    def generalised_log(self: Any) -> Any:
+    def generalised_log(self) -> List[int]:
         ...
-    def modulus(self: Any) -> Any:
+    def modulus(self) -> Integer:
         ...
-    def charpoly(self: Any, var: Any = ...) -> Any:
+    def charpoly(self, var: str = ...) -> Any:
         ...
-    def minpoly(self: Any, var: Any = ...) -> Any:
+    def minpoly(self, var: str = ...) -> Any:
         ...
-    def minimal_polynomial(self: Any, var: Any = ...) -> Any:
+    def minimal_polynomial(self, var: str = ...) -> Any:
         ...
-    def polynomial(self: Any, var: Any = ...) -> Any:
+    def polynomial(self, var: str = ...) -> Any:
         ...
-    def norm(self: Any) -> Any:
+    def norm(self) -> Any:
         ...
-    def trace(self: Any) -> Any:
+    def trace(self) -> Any:
         ...
-    def lift_centered(self: Any) -> Any:
+    def lift_centered(self) -> Integer:
         ...
-    def divides(self: Any, other: Any) -> Any:
+    def divides(self, other: "IntegerMod_abstract") -> bool:
         ...
-    def is_square(self: Any) -> Any:
+    def is_square(self) -> bool:
         ...
-    def sqrt(self: Any, extend: Any = ..., all: Any = ...) -> Any:
+    def sqrt(self, extend: bool = ..., all: bool = ...) -> Union["IntegerMod_abstract", List["IntegerMod_abstract"]]:
         ...
-    def nth_root(self: Any, n: Any, extend: Any = ..., all: Any = ..., algorithm: Any = ..., cunningham: Any = ...) -> Any:
+    def nth_root(self, n: int, extend: bool = ..., all: bool = ..., algorithm: Optional[str] = ..., cunningham: bool = ...) -> Union["IntegerMod_abstract", List["IntegerMod_abstract"]]:
         ...
-    def rational_reconstruction(self: Any) -> Any:
+    def rational_reconstruction(self) -> Rational:
         ...
-    def crt(self: Any, other: Any) -> Any:
+    def crt(self, other: "IntegerMod_abstract") -> "IntegerMod_abstract":
         ...
-    def additive_order(self: Any) -> Any:
+    def additive_order(self) -> Integer:
         ...
-    def multiplicative_order(self: Any) -> Any:
+    def multiplicative_order(self) -> Integer:
         ...
-    def valuation(self: Any, p: Any) -> Any:
+    def valuation(self, p: int) -> int:
         ...
 
 class IntegerMod_gmp(IntegerMod_abstract):
-    def __cinit__(self: Any) -> Any:
+    def __cinit__(self) -> None:
         ...
-    def __dealloc__(self: Any) -> Any:
+    def __dealloc__(self) -> None:
         ...
-    def __lshift__(self: Any, k: Any) -> Any:
+    def __lshift__(self, k: int) -> "IntegerMod_gmp":
         ...
-    def __rshift__(self: Any, k: Any) -> Any:
+    def __rshift__(self, k: int) -> "IntegerMod_gmp":
         ...
-    def __bool__(self: Any) -> Any:
+    def __bool__(self) -> bool:
         ...
-    def __copy__(self: Any) -> Any:
+    def __copy__(self) -> "IntegerMod_gmp":
         ...
-    def __deepcopy__(self: Any, memo: Any) -> Any:
+    def __deepcopy__(self, memo: Any) -> "IntegerMod_gmp":
         ...
-    def __int__(self: Any) -> Any:
+    def __int__(self) -> int:
         ...
-    def __index__(self: Any) -> Any:
+    def __index__(self) -> int:
         ...
-    def __pow__(self: Any, exp: Any, m: Any) -> Any:
+    def __pow__(self, exp: Any, m: Any = None) -> "IntegerMod_gmp":
         ...
-    def __invert__(self: Any) -> Any:
+    def __invert__(self) -> "IntegerMod_gmp":
         ...
-    def lift(self: Any) -> Any:
+    def lift(self) -> Integer:
         ...
-    def __float__(self: Any) -> Any:
+    def __float__(self) -> float:
         ...
-    def __hash__(self: Any) -> Any:
+    def __hash__(self) -> int:
         ...
-    def gcd(self: Any, other: Any) -> Any:
+    def gcd(self, other: "IntegerMod_abstract") -> "IntegerMod_gmp":
         ...
 
 class IntegerMod_int(IntegerMod_abstract):
-    def __bool__(self: Any) -> Any:
+    def __bool__(self) -> bool:
         ...
-    def __copy__(self: Any) -> Any:
+    def __copy__(self) -> "IntegerMod_int":
         ...
-    def __deepcopy__(self: Any, memo: Any) -> Any:
+    def __deepcopy__(self, memo: Any) -> "IntegerMod_int":
         ...
-    def __int__(self: Any) -> Any:
+    def __int__(self) -> int:
         ...
-    def __index__(self: Any) -> Any:
+    def __index__(self) -> int:
         ...
-    def __lshift__(self: Any, k: Any) -> Any:
+    def __lshift__(self, k: int) -> "IntegerMod_int":
         ...
-    def __rshift__(self: Any, k: Any) -> Any:
+    def __rshift__(self, k: int) -> "IntegerMod_int":
         ...
-    def __pow__(self: Any, exp: Any, m: Any) -> Any:
+    def __pow__(self, exp: Any, m: Any = None) -> "IntegerMod_int":
         ...
-    def __invert__(self: Any) -> Any:
+    def __invert__(self) -> "IntegerMod_int":
         ...
-    def lift(self: Any) -> Any:
+    def lift(self) -> Integer:
         ...
-    def __float__(self: Any) -> Any:
+    def __float__(self) -> float:
         ...
-    def __hash__(self: Any) -> Any:
+    def __hash__(self) -> int:
         ...
-    def sqrt(self: Any, extend: Any = ..., all: Any = ...) -> Any:
+    def sqrt(self, extend: bool = ..., all: bool = ...) -> Union["IntegerMod_int", List["IntegerMod_int"]]:
         ...
-    def gcd(self: Any, other: Any) -> Any:
+    def gcd(self, other: "IntegerMod_abstract") -> "IntegerMod_int":
         ...
 
 class IntegerMod_int64(IntegerMod_abstract):
-    def __bool__(self: Any) -> Any:
+    def __bool__(self) -> bool:
         ...
-    def __copy__(self: Any) -> Any:
+    def __copy__(self) -> "IntegerMod_int64":
         ...
-    def __deepcopy__(self: Any, memo: Any) -> Any:
+    def __deepcopy__(self, memo: Any) -> "IntegerMod_int64":
         ...
-    def __int__(self: Any) -> Any:
+    def __int__(self) -> int:
         ...
-    def __index__(self: Any) -> Any:
+    def __index__(self) -> int:
         ...
-    def __lshift__(self: Any, k: Any) -> Any:
+    def __lshift__(self, k: int) -> "IntegerMod_int64":
         ...
-    def __rshift__(self: Any, k: Any) -> Any:
+    def __rshift__(self, k: int) -> "IntegerMod_int64":
         ...
-    def __pow__(self: Any, exp: Any, m: Any) -> Any:
+    def __pow__(self, exp: Any, m: Any = None) -> "IntegerMod_int64":
         ...
-    def __invert__(self: Any) -> Any:
+    def __invert__(self) -> "IntegerMod_int64":
         ...
-    def lift(self: Any) -> Any:
+    def lift(self) -> Integer:
         ...
-    def __float__(self: Any) -> Any:
+    def __float__(self) -> float:
         ...
-    def __hash__(self: Any) -> Any:
+    def __hash__(self) -> int:
         ...
-    def gcd(self: Any, other: Any) -> Any:
+    def gcd(self, other: "IntegerMod_abstract") -> "IntegerMod_int64":
         ...
 
 class IntegerMod_hom(Morphism):
-    def __init__(self: Any, parent: Any) -> Any:
+    def __init__(self, parent: Any) -> None:
         ...
 
 class IntegerMod_to_IntegerMod(IntegerMod_hom):
-    def __init__(self: Any, R: Any, S: Any) -> Any:
+    def __init__(self, R: Any, S: Any) -> None:
         ...
-    def is_surjective(self: Any) -> Any:
+    def is_surjective(self) -> bool:
         ...
-    def is_injective(self: Any) -> Any:
+    def is_injective(self) -> bool:
         ...
 
 class Integer_to_IntegerMod(IntegerMod_hom):
-    def __init__(self: Any, R: Any) -> Any:
+    def __init__(self, R: Any) -> None:
         ...
-    def section(self: Any) -> Any:
+    def section(self) -> Any:
         ...
-    def is_surjective(self: Any) -> Any:
+    def is_surjective(self) -> bool:
         ...
-    def is_injective(self: Any) -> Any:
+    def is_injective(self) -> bool:
         ...
 
 class IntegerMod_to_Integer(Map):
-    def __init__(self: Any, R: Any) -> Any:
+    def __init__(self, R: Any) -> None:
         ...
 
 class Int_to_IntegerMod(IntegerMod_hom):
-    def __init__(self: Any, R: Any) -> Any:
+    def __init__(self, R: Any) -> None:
         ...
