@@ -137,6 +137,29 @@ def parse_function_signature(line: str) -> Optional[Dict[str, str]]:
     if func_type == 'cdef':
         return None
     
+    # Special handling for common dunder methods
+    special_return_types = {
+        '__init__': 'None',
+        '__new__': 'Any',
+        '__str__': 'str',
+        '__repr__': 'str',
+        '__hash__': 'int',
+        '__len__': 'int',
+        '__bool__': 'bool',
+        '__bytes__': 'bytes',
+        '__reduce__': 'Any',
+        '__reduce_ex__': 'Any',
+        '__getstate__': 'Any',
+        '__setstate__': 'None',
+        '__richcmp__': 'Any',
+        '__neg__': 'Any',
+        '__invert__': 'Any',
+        '__abs__': 'Any',
+    }
+    
+    if func_name in special_return_types:
+        return_type = special_return_types[func_name]
+    
     # Parse parameters
     param_list = []
     if params.strip():
@@ -155,30 +178,61 @@ def parse_function_signature(line: str) -> Optional[Dict[str, str]]:
                 else:
                     default = None
                     
-                # Simple parameter name extraction
-                # Remove type annotations for now and just extract the parameter name
+                # Enhanced parameter type detection
+                param_type = 'Any'
+                param_name = param
+                
                 # Handle Cython-specific syntax like "param not None"
                 if ' not None' in param:
                     param = param.replace(' not None', '')
                 
+                # Try to extract type annotations
                 if ' ' in param:
-                    # Has type annotation, get the last word as parameter name
                     parts = param.split()
-                    param_name = parts[-1]
-                    param_type = 'Any'  # Simplified for now
+                    if len(parts) >= 2:
+                        # Could be "type name" format
+                        potential_type = parts[0]
+                        param_name = parts[-1]
+                        
+                        # Map common Cython types to Python types
+                        if potential_type in CYTHON_TO_PYTHON_TYPES:
+                            param_type = CYTHON_TO_PYTHON_TYPES[potential_type]
+                        elif potential_type in ['bint', 'bool']:
+                            param_type = 'bool'
+                        elif potential_type in ['int', 'long', 'Py_ssize_t', 'size_t']:
+                            param_type = 'int' 
+                        elif potential_type in ['double', 'float']:
+                            param_type = 'float'
+                        elif potential_type in ['str', 'char*', 'const char*']:
+                            param_type = 'str'
+                        elif potential_type == 'object':
+                            param_type = 'Any'
+                        else:
+                            # Keep the Cython type if it looks like a class name
+                            if potential_type[0].isupper():
+                                param_type = potential_type
+                            else:
+                                param_type = 'Any'
                 else:
-                    # No type annotation
-                    param_type = 'Any'
+                    # No spaces - just the parameter name
                     param_name = param
+                    param_type = 'Any'
                 
                 # Skip invalid parameter names (like numbers)
                 if not param_name.isidentifier():
                     continue
-                    
-                if default is not None:
-                    param_list.append(f"{param_name}: {param_type} = ...")
+                
+                # Special handling for self parameter - don't add type annotation
+                if param_name == 'self':
+                    if default is not None:
+                        param_list.append(f"{param_name} = ...")
+                    else:
+                        param_list.append(f"{param_name}")
                 else:
-                    param_list.append(f"{param_name}: {param_type}")
+                    if default is not None:
+                        param_list.append(f"{param_name}: {param_type} = ...")
+                    else:
+                        param_list.append(f"{param_name}: {param_type}")
         except Exception:
             # If parsing fails, just add a generic *args, **kwargs
             param_list = ['*args: Any', '**kwargs: Any']
