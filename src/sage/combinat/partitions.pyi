@@ -1,28 +1,28 @@
-from typing import Any
+from typing import Any, Iterator, List
 
-def ZS1_iterator(n: Any) -> Any:
+def ZS1_iterator(n: int) -> Iterator[List[int]]:
     ...
 
-def ZS1_next(P: Any) -> Any:
+def ZS1_next(P: List[int]) -> List[int]:
     ...
 
-def ZS1_iterator_nk(n: Any, k: Any) -> Any:
+def ZS1_iterator_nk(n: int, k: int) -> Iterator[List[int]]:
     ...
 
-def ZS2_iterator(n: Any) -> Any:
+def ZS2_iterator(n: int) -> Iterator[List[int]]:
     ...
 
-def ZS2_next(P: Any) -> Any:
+def ZS2_next(P: List[int]) -> List[int]:
     ...
 
-def AccelDesc_iterator(n: Any) -> Any:
+def AccelDesc_iterator(n: int) -> Iterator[List[int]]:
     ...
 
-def AccelDesc_next(P: Any) -> Any:
+def AccelDesc_next(P: List[int]) -> List[int]:
     ...
 
-def AccelAsc_iterator(n: Any) -> Any:
+def AccelAsc_iterator(n: int) -> Iterator[List[int]]:
     ...
 
-def AccelAsc_next(P: Any) -> Any:
+def AccelAsc_next(P: List[int]) -> List[int]:
     ...

@@ -1,52 +1,53 @@
-from typing import Any
+from typing import Any, Optional, Iterator, List, Union
+from sage.rings.polynomial.commutative_polynomial import CommutativePolynomial
 
-def is_Polynomial(f: Any) -> Any:
+def is_Polynomial(f: Any) -> bool:
     ...
 
-def make_generic_polynomial(parent: Any, coeffs: Any) -> Any:
+def make_generic_polynomial(parent: Any, coeffs: List[Any]) -> 'Polynomial':
     ...
 
-def universal_discriminant(n: Any) -> Any:
+def universal_discriminant(n: int) -> 'Polynomial':
     ...
 
-def generic_power_trunc(p: Any, n: Any, prec: Any) -> Any:
+def generic_power_trunc(p: 'Polynomial', n: int, prec: int) -> 'Polynomial':
     ...
 
 class PariError(Exception):
     ...
 
 class Polynomial(CommutativePolynomial):
-    def __init__(self: Any, parent: Any, is_gen: Any = ..., construct: Any = ...) -> Any:
+    def __init__(self, parent: Any, is_gen: bool = False, construct: bool = False) -> None:
         ...
-    def is_zero(self: Any) -> bool:
+    def is_zero(self) -> bool:
         ...
-    def is_one(self: Any) -> bool:
+    def is_one(self) -> bool:
         ...
-    def plot(self: Any, xmin: Any = ..., xmax: Any = ...) -> Any:
+    def plot(self, xmin: Optional[float] = None, xmax: Optional[float] = None, **kwds: Any) -> Any:
         ...
-    def subs(self: Any, in_dict: Any = ...) -> Any:
+    def subs(self, in_dict: Optional[dict] = None, **kwds: Any) -> Any:
         ...
-    def __call__(self: Any) -> Any:
+    def __call__(self, *args: Any, **kwds: Any) -> Any:
         ...
-    def compose_trunc(self: Any, other: Any, n: Any) -> Any:
+    def compose_trunc(self, other: 'Polynomial', n: int) -> 'Polynomial':
         ...
-    def __bool__(self: Any) -> Any:
+    def __bool__(self) -> bool:
         ...
-    def __getitem__(self: Any, n: Any) -> Any:
+    def __getitem__(self, n: int) -> Any:
         ...
-    def __iter__(self: Any) -> Any:
+    def __iter__(self) -> Iterator[Any]:
         ...
-    def __hash__(self: Any) -> Any:
+    def __hash__(self) -> int:
         ...
-    def __int__(self: Any) -> Any:
+    def __int__(self) -> int:
         ...
-    def __float__(self: Any) -> Any:
+    def __float__(self) -> float:
         ...
-    def __complex__(self: Any) -> Any:
+    def __complex__(self) -> complex:
         ...
-    def __invert__(self: Any) -> Any:
+    def __invert__(self) -> 'Polynomial':
         ...
-    def inverse_of_unit(self: Any) -> Any:
+    def inverse_of_unit(self) -> 'Polynomial':
         ...
     def inverse_mod(a: Any, m: Any) -> Any:
         ...

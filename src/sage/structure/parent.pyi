@@ -1,76 +1,77 @@
-from typing import Any
+from typing import Any, Optional, Type, Dict
+from sage.structure.category_object import CategoryObject
 
-def is_Parent(x: Any) -> Any:
+def is_Parent(x: Any) -> bool:
     ...
 
-class Parent(sage.structure.category_object.CategoryObject):
-    def __cinit__(self: Any) -> Any:
+class Parent(CategoryObject):
+    def __cinit__(self) -> None:
         ...
-    def element_class(self: Any) -> Any:
+    def element_class(self) -> Type:
         ...
-    def __make_element_class__(self: Any, cls: Any, name: Any = ..., module: Any = ..., inherit: Any = ...) -> Any:
+    def __make_element_class__(self, cls: Type, name: Optional[str] = None, module: Optional[str] = None, inherit: Optional[bool] = None) -> Type:
         ...
-    def category(self: Any) -> Any:
+    def category(self) -> Any:
         ...
-    def __getstate__(self: Any) -> Any:
+    def __getstate__(self) -> Dict[str, Any]:
         ...
-    def __setstate__(self: Any, d: Any) -> Any:
+    def __setstate__(self, d: Dict[str, Any]) -> None:
         ...
-    def __call__(self: Any, x: Any = ...) -> Any:
+    def __call__(self, x: Any = 0) -> Any:
         ...
-    def __mul__(self: Any, x: Any) -> Any:
+    def __mul__(self, x: Any) -> Any:
         ...
-    def __pow__(self: Any, x: Any, mod: Any) -> Any:
+    def __pow__(self, x: Any, mod: Any = None) -> Any:
         ...
-    def __contains__(self: Any, x: Any) -> Any:
+    def __contains__(self, x: Any) -> bool:
         ...
-    def coerce(self: Any, x: Any) -> Any:
+    def coerce(self, x: Any) -> Any:
         ...
-    def __bool__(self: Any) -> Any:
+    def __bool__(self) -> bool:
         ...
-    def __getitem__(self: Any, n: Any) -> Any:
+    def __getitem__(self, n: Any) -> Any:
         ...
-    def Hom(self: Any, codomain: Any, category: Any = ...) -> Any:
+    def Hom(self, codomain: 'Parent', category: Optional[Any] = None) -> Any:
         ...
-    def hom(self: Any, im_gens: Any, codomain: Any = ..., check: Any = ..., base_map: Any = ..., category: Any = ...) -> Any:
+    def hom(self, im_gens: Any, codomain: Optional['Parent'] = None, check: bool = True, base_map: Optional[Any] = None, category: Optional[Any] = None) -> Any:
         ...
-    def register_coercion(self: Any, mor: Any) -> Any:
+    def register_coercion(self, mor: Any) -> None:
         ...
-    def register_action(self: Any, action: Any) -> Any:
+    def register_action(self, action: Any) -> None:
         ...
-    def register_conversion(self: Any, mor: Any) -> Any:
+    def register_conversion(self, mor: Any) -> None:
         ...
-    def register_embedding(self: Any, embedding: Any) -> Any:
+    def register_embedding(self, embedding: Any) -> None:
         ...
-    def coerce_embedding(self: Any) -> Any:
+    def coerce_embedding(self) -> Optional[Any]:
         ...
-    def has_coerce_map_from(self: Any, S: Any) -> bool:
+    def has_coerce_map_from(self, S: 'Parent') -> bool:
         ...
-    def coerce_map_from(self: Any, S: Any) -> Any:
+    def coerce_map_from(self, S: 'Parent') -> Optional[Any]:
         ...
-    def convert_map_from(self: Any, S: Any) -> Any:
+    def convert_map_from(self, S: 'Parent') -> Optional[Any]:
         ...
-    def get_action(self: Any, S: Any, op: Any = ..., self_on_left: Any = ..., self_el: Any = ..., S_el: Any = ...) -> Any:
+    def get_action(self, S: 'Parent', op: str = '*', self_on_left: bool = True, self_el: Optional[Any] = None, S_el: Optional[Any] = None) -> Optional[Any]:
         ...
-    def an_element(self: Any) -> Any:
+    def an_element(self) -> Any:
         ...
-    def is_exact(self: Any) -> bool:
+    def is_exact(self) -> bool:
         ...
 
 class Set_generic(Parent):
-    def object(self: Any) -> Any:
+    def object(self) -> Any:
         ...
-    def __bool__(self: Any) -> Any:
+    def __bool__(self) -> bool:
         ...
 
 class EltPair:
-    def __init__(self: Any, x: Any, y: Any, tag: Any) -> Any:
+    def __init__(self, x: Any, y: Any, tag: Any) -> None:
         ...
-    def __richcmp__(self: Any, other: Any, op: Any) -> Any:
+    def __richcmp__(self, other: 'EltPair', op: int) -> bool:
         ...
-    def __hash__(self: Any) -> Any:
+    def __hash__(self) -> int:
         ...
-    def short_repr(self: Any) -> Any:
+    def short_repr(self) -> str:
         ...
-    def __repr__(self: Any) -> Any:
+    def __repr__(self) -> str:
         ...

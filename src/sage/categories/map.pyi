@@ -1,41 +1,42 @@
-from typing import Any
+from typing import Any, Optional, Tuple, Dict
+from sage.structure.element import Element
 
-def unpickle_map(_class: Any, parent: Any, _dict: Any, _slots: Any) -> Any:
+def unpickle_map(_class: type, parent: Any, _dict: Dict[str, Any], _slots: Dict[str, Any]) -> 'Map':
     ...
 
-def is_Map(x: Any) -> Any:
+def is_Map(x: Any) -> bool:
     ...
 
 class Map(Element):
-    def __init__(self: Any, parent: Any, codomain: Any = ...) -> Any:
+    def __init__(self, parent: Any, codomain: Optional[Any] = None) -> None:
         ...
-    def __copy__(self: Any) -> Any:
+    def __copy__(self) -> 'Map':
         ...
-    def parent(self: Any) -> Any:
+    def parent(self) -> Any:
         ...
-    def __reduce__(self: Any) -> Any:
+    def __reduce__(self) -> Tuple[Any, ...]:
         ...
-    def domains(self: Any) -> Any:
+    def domains(self) -> list:
         ...
-    def category_for(self: Any) -> Any:
+    def category_for(self) -> Any:
         ...
-    def __call__(self: Any, x: Any) -> Any:
+    def __call__(self, x: Any) -> Any:
         ...
-    def __mul__(self: Any, right: Any) -> Any:
+    def __mul__(self, right: 'Map') -> 'Map':
         ...
-    def pre_compose(self: Any, right: Any) -> Any:
+    def pre_compose(self, right: 'Map') -> 'Map':
         ...
-    def post_compose(self: Any, left: Any) -> Any:
+    def post_compose(self, left: 'Map') -> 'Map':
         ...
-    def extend_domain(self: Any, new_domain: Any) -> Any:
+    def extend_domain(self, new_domain: Any) -> 'Map':
         ...
-    def extend_codomain(self: Any, new_codomain: Any) -> Any:
+    def extend_codomain(self, new_codomain: Any) -> 'Map':
         ...
-    def is_surjective(self: Any) -> Any:
+    def is_surjective(self) -> bool:
         ...
-    def section(self: Any) -> Any:
+    def section(self) -> Optional['Map']:
         ...
-    def __hash__(self: Any) -> Any:
+    def __hash__(self) -> int:
         ...
 
 class Section(Map):
