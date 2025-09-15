@@ -1,27 +1,27 @@
-from typing import Any
+from typing import Any, List, Tuple, Union
 
 class Spline:
-    def __init__(self: Any, v: Any = ...) -> Any:
+    def __init__(self, v: List[Tuple[float, float]] = ...) -> None:
         ...
-    def __dealloc__(self: Any) -> Any:
+    def __dealloc__(self) -> None:
         ...
-    def __setitem__(self: Any, i: Any, xy: Any) -> Any:
+    def __setitem__(self, i: int, xy: Tuple[float, float]) -> None:
         ...
-    def __getitem__(self: Any, i: Any) -> Any:
+    def __getitem__(self, i: int) -> Tuple[float, float]:
         ...
-    def __delitem__(self: Any, i: Any) -> Any:
+    def __delitem__(self, i: int) -> None:
         ...
-    def append(self: Any, xy: Any) -> Any:
+    def append(self, xy: Tuple[float, float]) -> None:
         ...
-    def list(self: Any) -> Any:
+    def list(self) -> List[Tuple[float, float]]:
         ...
-    def __len__(self: Any) -> Any:
+    def __len__(self) -> int:
         ...
-    def __repr__(self: Any) -> Any:
+    def __repr__(self) -> str:
         ...
-    def __call__(self: Any, x: Any) -> Any:
+    def __call__(self, x: float) -> float:
         ...
-    def derivative(self: Any, x: Any, order: Any = ...) -> Any:
+    def derivative(self, x: float, order: int = ...) -> float:
         ...
-    def definite_integral(self: Any, a: Any, b: Any) -> Any:
+    def definite_integral(self, a: float, b: float) -> float:
         ...

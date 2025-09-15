@@ -1,44 +1,45 @@
-from typing import Any
+from typing import Any, List, Iterator, Tuple, Optional
+from sage.rings.integer import Integer
 
 class MultiModularBasis_base:
-    def __cinit__(self: Any) -> Any:
+    def __cinit__(self) -> None:
         ...
-    def __dealloc__(self: Any) -> Any:
+    def __dealloc__(self) -> None:
         ...
-    def __init__(self: Any, val: Any, l_bound: Any = ..., u_bound: Any = ...) -> Any:
+    def __init__(self, val: List[int], l_bound: Optional[Integer] = ..., u_bound: Optional[Integer] = ...) -> None:
         ...
-    def extend_with_primes(self: Any, plist: Any, partial_products: Any = ..., check: Any = ...) -> Any:
+    def extend_with_primes(self, plist: List[int], partial_products: bool = ..., check: bool = ...) -> None:
         ...
-    def __richcmp__(self: Any, other: Any, op: Any) -> Any:
+    def __richcmp__(self, other: "MultiModularBasis_base", op: int) -> bool:
         ...
-    def __setstate__(self: Any, state: Any) -> Any:
+    def __setstate__(self, state: Any) -> None:
         ...
-    def __getstate__(self: Any) -> Any:
+    def __getstate__(self) -> Any:
         ...
-    def crt(self: Any, b: Any) -> Any:
+    def crt(self, b: List[int]) -> Integer:
         ...
-    def precomputation_list(self: Any) -> Any:
+    def precomputation_list(self) -> List[int]:
         ...
-    def partial_product(self: Any, n: Any) -> Any:
+    def partial_product(self, n: int) -> Integer:
         ...
-    def prod(self: Any) -> Any:
+    def prod(self) -> Integer:
         ...
-    def list(self: Any) -> Any:
+    def list(self) -> List[int]:
         ...
-    def __len__(self: Any) -> Any:
+    def __len__(self) -> int:
         ...
-    def __iter__(self: Any) -> Any:
+    def __iter__(self) -> Iterator[int]:
         ...
-    def __getitem__(self: Any, ix: Any) -> Any:
+    def __getitem__(self, ix: int) -> int:
         ...
-    def __repr__(self: Any) -> Any:
+    def __repr__(self) -> str:
         ...
 
 class MultiModularBasis(MultiModularBasis_base):
     ...
 
 class MutableMultiModularBasis(MultiModularBasis):
-    def next_prime(self: Any) -> Any:
+    def next_prime(self) -> int:
         ...
-    def replace_prime(self: Any, ix: Any) -> Any:
+    def replace_prime(self, ix: int) -> int:
         ...

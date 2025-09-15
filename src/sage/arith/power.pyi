@@ -1,4 +1,6 @@
-from typing import Any
+from typing import Any, TypeVar
 
-def generic_power(a: Any, n: Any) -> Any:
+T = TypeVar('T')
+
+def generic_power(a: T, n: int) -> T:
     ...
