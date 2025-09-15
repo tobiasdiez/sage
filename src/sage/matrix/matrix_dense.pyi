@@ -1,9 +1,10 @@
 from typing import Any
+import sage.matrix.matrix
 
-class Matrix_dense(matrix.Matrix):
-    def __copy__(self: Any) -> Any:
+class Matrix_dense(sage.matrix.matrix.Matrix):
+    def __copy__(self) -> "Matrix_dense":
         ...
-    def transpose(self: Any) -> Any:
+    def transpose(self) -> "Matrix_dense":
         ...
-    def antitranspose(self: Any) -> Any:
+    def antitranspose(self) -> "Matrix_dense":
         ...

@@ -1,25 +1,26 @@
-from typing import Any
+from typing import Any, List, Optional
+import sage.matrix.matrix
 
-class Matrix_sparse(matrix.Matrix):
-    def change_ring(self: Any, ring: Any) -> Any:
+class Matrix_sparse(sage.matrix.matrix.Matrix):
+    def change_ring(self, ring: Any) -> "Matrix_sparse":
         ...
-    def __copy__(self: Any) -> Any:
+    def __copy__(self) -> "Matrix_sparse":
         ...
-    def transpose(self: Any) -> Any:
+    def transpose(self) -> "Matrix_sparse":
         ...
-    def antitranspose(self: Any) -> Any:
+    def antitranspose(self) -> "Matrix_sparse":
         ...
-    def charpoly(self: Any, var: Any = ...) -> Any:
+    def charpoly(self, var: str = ...) -> Any:
         ...
-    def determinant(self: Any) -> Any:
+    def determinant(self) -> Any:
         ...
-    def apply_morphism(self: Any, phi: Any) -> Any:
+    def apply_morphism(self, phi: Any) -> "Matrix_sparse":
         ...
-    def apply_map(self: Any, phi: Any, R: Any = ..., sparse: Any = ...) -> Any:
+    def apply_map(self, phi: Any, R: Any = ..., sparse: bool = ...) -> "Matrix_sparse":
         ...
-    def density(self: Any) -> Any:
+    def density(self) -> float:
         ...
-    def matrix_from_rows_and_columns(self: Any, rows: Any, columns: Any) -> Any:
+    def matrix_from_rows_and_columns(self, rows: List[int], columns: List[int]) -> "Matrix_sparse":
         ...
-    def augment(self: Any, right: Any, subdivide: Any = ...) -> Any:
+    def augment(self, right: "Matrix_sparse", subdivide: bool = ...) -> "Matrix_sparse":
         ...

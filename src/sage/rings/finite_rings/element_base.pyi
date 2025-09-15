@@ -1,58 +1,61 @@
-from typing import Any
+from typing import Any, List, Optional, Union, Iterator
+from sage.structure.element import CommutativeRingElement
+from sage.structure.sage_object import SageObject
+from sage.rings.integer import Integer
 
-def is_FiniteFieldElement(x: Any) -> Any:
+def is_FiniteFieldElement(x: Any) -> bool:
     ...
 
 class FiniteRingElement(CommutativeRingElement):
-    def to_bytes(self: Any, byteorder: Any = ...) -> Any:
+    def to_bytes(self, byteorder: str = ...) -> bytes:
         ...
-    def canonical_associate(self: Any) -> Any:
+    def canonical_associate(self) -> "FiniteRingElement":
         ...
 
 class FinitePolyExtElement(FiniteRingElement):
-    def minpoly(self: Any, var: Any = ..., algorithm: Any = ...) -> Any:
+    def minpoly(self, var: str = ..., algorithm: Optional[str] = ...) -> Any:
         ...
-    def minimal_polynomial(self: Any, var: Any = ...) -> Any:
+    def minimal_polynomial(self, var: str = ...) -> Any:
         ...
-    def __getitem__(self: Any, n: Any) -> Any:
+    def __getitem__(self, n: int) -> Any:
         ...
-    def list(self: Any) -> Any:
+    def list(self) -> List[Any]:
         ...
-    def __iter__(self: Any) -> Any:
+    def __iter__(self) -> Iterator[Any]:
         ...
-    def matrix(self: Any, reverse: Any = ...) -> Any:
+    def matrix(self, reverse: bool = ...) -> Any:
         ...
-    def __pari__(self: Any, var: Any = ...) -> Any:
+    def __pari__(self, var: Optional[str] = ...) -> Any:
         ...
-    def charpoly(self: Any, var: Any = ..., algorithm: Any = ...) -> Any:
+    def charpoly(self, var: str = ..., algorithm: Optional[str] = ...) -> Any:
         ...
-    def norm(self: Any) -> Any:
+    def norm(self) -> Any:
         ...
-    def trace(self: Any) -> Any:
+    def trace(self) -> Any:
         ...
-    def multiplicative_order(self: Any) -> Any:
+    def multiplicative_order(self) -> Integer:
         ...
-    def additive_order(self: Any) -> Any:
+    def additive_order(self) -> Integer:
         ...
-    def is_square(self: Any) -> Any:
+    def is_square(self) -> bool:
         ...
-    def square_root(self: Any, extend: Any = ..., all: Any = ...) -> Any:
+    def square_root(self, extend: bool = ..., all: bool = ...) -> Union["FinitePolyExtElement", List["FinitePolyExtElement"]]:
         ...
-    def sqrt(self: Any, extend: Any = ..., all: Any = ...) -> Any:
+    def sqrt(self, extend: bool = ..., all: bool = ...) -> Union["FinitePolyExtElement", List["FinitePolyExtElement"]]:
         ...
-    def nth_root(self: Any, n: Any, extend: Any = ..., all: Any = ..., algorithm: Any = ..., cunningham: Any = ...) -> Any:
+    def nth_root(self, n: int, extend: bool = ..., all: bool = ..., algorithm: Optional[str] = ..., cunningham: bool = ...) -> Union["FinitePolyExtElement", List["FinitePolyExtElement"]]:
         ...
-    def pth_power(self: Any, k: Any = ...) -> Any:
+    def pth_power(self, k: int = ...) -> "FinitePolyExtElement":
         ...
-    def pth_root(self: Any, k: Any = ...) -> Any:
+    def pth_root(self, k: int = ...) -> "FinitePolyExtElement":
         ...
-    def conjugate(self: Any) -> Any:
+    def conjugate(self) -> "FinitePolyExtElement":
         ...
-    def to_integer(self: Any, reverse: Any = ...) -> Any:
+    def to_integer(self, reverse: bool = ...) -> Integer:
         ...
-    def to_bytes(self: Any, byteorder: Any = ...) -> Any:
+    def to_bytes(self, byteorder: str = ...) -> bytes:
         ...
 
 class Cache_base(SageObject):
-    def fetch_int(self: Any, number: Any) -> Any:
+    def fetch_int(self, number: int) -> Any:
         ...

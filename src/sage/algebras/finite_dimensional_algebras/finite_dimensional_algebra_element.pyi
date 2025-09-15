@@ -1,42 +1,43 @@
-from typing import Any
+from typing import Any, Dict, Tuple
+from sage.algebras.algebra_element import AlgebraElement
 
-def unpickle_FiniteDimensionalAlgebraElement(A: Any, vec: Any, mat: Any) -> Any:
+def unpickle_FiniteDimensionalAlgebraElement(A: Any, vec: Any, mat: Any) -> "FiniteDimensionalAlgebraElement":
     ...
 
 class FiniteDimensionalAlgebraElement(AlgebraElement):
-    def __init__(self: Any, A: Any, elt: Any = ..., check: Any = ...) -> Any:
+    def __init__(self, A: Any, elt: Any = ..., check: bool = ...) -> None:
         ...
-    def __reduce__(self: Any) -> Any:
+    def __reduce__(self) -> Tuple[Any, ...]:
         ...
-    def __setstate__(self: Any, state: Any) -> Any:
+    def __setstate__(self, state: Any) -> None:
         ...
-    def vector(self: Any) -> Any:
+    def vector(self) -> Any:
         ...
-    def matrix(self: Any) -> Any:
+    def matrix(self) -> Any:
         ...
-    def monomial_coefficients(self: Any, copy: Any = ...) -> Dict[Any, Any]:
+    def monomial_coefficients(self, copy: bool = ...) -> Dict[Any, Any]:
         ...
-    def left_matrix(self: Any) -> Any:
+    def left_matrix(self) -> Any:
         ...
-    def __hash__(self: Any) -> Any:
+    def __hash__(self) -> int:
         ...
-    def __getitem__(self: Any, m: Any) -> Any:
+    def __getitem__(self, m: Any) -> Any:
         ...
-    def __len__(self: Any) -> Any:
+    def __len__(self) -> int:
         ...
-    def __pow__(self: Any, n: Any, m: Any) -> Any:
+    def __pow__(self, n: int, m: Any = None) -> "FiniteDimensionalAlgebraElement":
         ...
-    def __invert__(self: Any) -> Any:
+    def __invert__(self) -> "FiniteDimensionalAlgebraElement":
         ...
-    def is_invertible(self: Any) -> Any:
+    def is_invertible(self) -> bool:
         ...
-    def inverse(self: Any) -> Any:
+    def inverse(self) -> "FiniteDimensionalAlgebraElement":
         ...
-    def is_zerodivisor(self: Any) -> Any:
+    def is_zerodivisor(self) -> bool:
         ...
-    def is_nilpotent(self: Any) -> Any:
+    def is_nilpotent(self) -> bool:
         ...
-    def minimal_polynomial(self: Any) -> Any:
+    def minimal_polynomial(self) -> Any:
         ...
-    def characteristic_polynomial(self: Any) -> Any:
+    def characteristic_polynomial(self) -> Any:
         ...
