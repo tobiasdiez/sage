@@ -105,7 +105,6 @@ jobs:
           name: dist
           path: dist
 
-<<<<<<< HEAD:.github/workflows/dist.yml
       - name: Create release notes
         env:
           GITHUB_PAT: ${{ secrets.RELEASE_CREATION_TOKEN }}
