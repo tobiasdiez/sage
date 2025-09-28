@@ -150,10 +150,6 @@ def var(key: str, *fallbacks: Optional[str], force: bool = False) -> Optional[st
     else:
         value = os.environ.get(key)
     if value is None:
-        try:
-            import sage_conf
-            value = getattr(sage_conf, key, None)
-        except ImportError:
             try:
                 import sage.config
                 value = getattr(sage.config, key, None)
