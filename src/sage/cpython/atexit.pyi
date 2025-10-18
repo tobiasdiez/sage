@@ -1,0 +1,9 @@
+from typing import Any
+
+class restore_atexit:
+    def __init__(self: Any, run: Any = ..., clear: Any = ...) -> Any:
+        ...
+    def __enter__(self: Any) -> Any:
+        ...
+    def __exit__(self: Any) -> Any:
+        ...

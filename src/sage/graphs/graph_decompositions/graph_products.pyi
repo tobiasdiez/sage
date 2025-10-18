@@ -1,0 +1,13 @@
+from typing import Any
+
+def is_cartesian_product(g: Any, certificate: Any = ..., relabeling: Any = ..., immutable: Any = ...) -> Any:
+    ...
+
+def r(x: Any, y: Any) -> Any:
+    ...
+
+def rooted_product(G: Any, H: Any, root: Any = ..., immutable: Any = ...) -> Any:
+    ...
+
+def edges() -> Any:
+    ...

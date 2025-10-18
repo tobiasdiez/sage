@@ -1,0 +1,9 @@
+from typing import Any
+
+class ListOfPairs:
+    def __dealloc__(self: Any) -> Any:
+        ...
+    def __getitem__(self: Any, index: Any) -> Any:
+        ...
+    def __setitem__(self: Any, index: Any, value: Any) -> Any:
+        ...

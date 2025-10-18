@@ -1,0 +1,19 @@
+from typing import Any
+
+class MatroidUnion(Matroid):
+    def __init__(self: Any, matroids: Any) -> Any:
+        ...
+    def groundset(self: Any) -> Any:
+        ...
+
+class MatroidSum(Matroid):
+    def __init__(self: Any, summands: Any) -> Any:
+        ...
+    def groundset(self: Any) -> Any:
+        ...
+
+class PartitionMatroid(Matroid):
+    def __init__(self: Any, partition: Any) -> Any:
+        ...
+    def groundset(self: Any) -> Any:
+        ...

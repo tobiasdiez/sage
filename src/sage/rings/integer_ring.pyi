@@ -26,10 +26,10 @@ class IntegerRing_class(CommutativeRing):
     def _latex_(self) -> str:
         ...
 
-    def __getitem__(self, x: Any) -> Any:
+    def __getitem__(self, x: int) -> Any:
         ...
 
-    def range(self, start: Any, end: Optional[Any] = None, step: Optional[Any] = None) -> List[Integer]:
+    def range(self, start: int, end: Optional[int] = None, step: Optional[int] = None) -> List[Integer]:
         ...
 
     def __iter__(self) -> Any:
@@ -38,10 +38,10 @@ class IntegerRing_class(CommutativeRing):
     def _coerce_map_from_(self, S: Any) -> Optional[Any]:
         ...
 
-    def random_element(self, x: Optional[Any] = None, y: Optional[Any] = None, distribution: Optional[str] = None) -> Integer:
+    def random_element(self, x: Optional[int] = None, y: Optional[int] = None, distribution: Optional[str] = None) -> Integer:
         ...
 
-    def _randomize_mpz(self, value: mpz_t, x: Optional[Any], y: Optional[Any], distribution: Optional[str]) -> int:
+    def _randomize_mpz(self, value: mpz_t, x: Optional[int], y: Optional[int], distribution: Optional[str]) -> int:
         ...
 
     def _is_valid_homomorphism_(self, codomain: Any, im_gens: List[Any], base_map: Optional[Any] = None) -> bool:
@@ -86,7 +86,7 @@ class IntegerRing_class(CommutativeRing):
     def krull_dimension(self) -> int:
         ...
 
-    def completion(self, p: Any, prec: int, extras: Optional[dict] = {}) -> Any:
+    def completion(self, p: int, prec: int, extras: Optional[dict] = {}) -> Any:
         ...
 
     def order(self) -> Any:

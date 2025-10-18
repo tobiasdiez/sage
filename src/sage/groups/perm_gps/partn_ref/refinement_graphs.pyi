@@ -1,0 +1,19 @@
+from typing import Any
+
+def isomorphic(G1: Any, G2: Any, partn: Any, ordering2: Any, dig: Any, use_indicator_function: Any, sparse: Any = ...) -> Any:
+    ...
+
+def all_labeled_graphs(n: Any) -> Any:
+    ...
+
+def random_tests(num: Any = ..., n_max: Any = ..., perms_per_graph: Any = ...) -> Any:
+    ...
+
+def orbit_partition(gamma: Any, list_perm: Any = ...) -> Any:
+    ...
+
+def coarsest_equitable_refinement(G: Any, partition: Any, directed: Any) -> Any:
+    ...
+
+def get_orbits(gens: Any, n: Any) -> Any:
+    ...

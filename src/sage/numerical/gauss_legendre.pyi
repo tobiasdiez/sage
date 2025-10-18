@@ -1,0 +1,16 @@
+from typing import Any
+
+def nodes_uncached(degree: Any, prec: Any) -> Any:
+    ...
+
+def nodes(degree: Any, prec: Any) -> Any:
+    ...
+
+def estimate_error(results: Any, prec: Any, epsilon: Any) -> Any:
+    ...
+
+def integrate_vector_N(f: Any, prec: Any, N: Any = ...) -> Any:
+    ...
+
+def integrate_vector(f: Any, prec: Any, epsilon: Any = ...) -> Any:
+    ...

@@ -1,0 +1,16 @@
+from typing import Any
+
+def init(state: Any = ...) -> Any:
+    ...
+
+def show_identifiers(hidden: Any = ...) -> Any:
+    ...
+
+def save_session(name: Any = ..., verbose: Any = ...) -> Any:
+    ...
+
+def load_session(name: Any = ..., verbose: Any = ...) -> Any:
+    ...
+
+class Foo:
+    ...

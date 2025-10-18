@@ -1,0 +1,9 @@
+from typing import Any
+
+class IncreasingChains(RecursivelyEnumeratedSet_forest):
+    def __contains__(self: Any, tup: Any) -> Any:
+        ...
+    def post_process(self: Any, chain: Any) -> Any:
+        ...
+    def children(self: Any, chain: Any) -> Any:
+        ...

@@ -1,0 +1,13 @@
+from typing import Any
+
+class Category_contains_method_by_parent_class:
+    def __init__(self: Any, category: Any) -> Any:
+        ...
+    def __call__(self: Any, x: Any) -> Any:
+        ...
+
+class Category_singleton(Category):
+    def __classcall__(cls: Any) -> Any:
+        ...
+    def __contains__(cls: Any) -> Any:
+        ...

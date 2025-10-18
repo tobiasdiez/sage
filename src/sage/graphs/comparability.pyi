@@ -1,0 +1,13 @@
+from typing import Any
+
+def greedy_is_comparability(g: Any, no_certificate: Any = ..., equivalence_class: Any = ...) -> Any:
+    ...
+
+def greedy_is_comparability_with_certificate(g: Any, certificate: Any = ...) -> Any:
+    ...
+
+def is_comparability_MILP(g: Any, certificate: Any = ..., solver: Any = ..., verbose: Any = ...) -> Any:
+    ...
+
+def is_transitive(g: Any, certificate: Any = ...) -> Any:
+    ...

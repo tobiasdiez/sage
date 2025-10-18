@@ -1,0 +1,13 @@
+from typing import Any
+
+def get_owned_objects() -> Any:
+    ...
+
+class ObjWrapper:
+    def __richcmp__(self: Any, other: Any, op: Any) -> Any:
+        ...
+    def __hash__(self: Any) -> Any:
+        ...
+
+class GAPError(ValueError):
+    ...

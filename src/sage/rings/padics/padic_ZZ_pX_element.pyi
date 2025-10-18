@@ -1,0 +1,9 @@
+from typing import Any
+
+class pAdicZZpXElement(pAdicExtElement):
+    def __init__(self: Any, parent: Any) -> Any:
+        ...
+    def norm(self: Any, base: Any = ...) -> Any:
+        ...
+    def trace(self: Any, base: Any = ...) -> Any:
+        ...

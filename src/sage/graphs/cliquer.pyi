@@ -1,0 +1,13 @@
+from typing import Any
+
+def max_clique(graph: Any) -> Any:
+    ...
+
+def all_max_clique(graph: Any) -> Any:
+    ...
+
+def all_cliques(graph: Any, min_size: Any = ..., max_size: Any = ...) -> Any:
+    ...
+
+def clique_number(graph: Any) -> Any:
+    ...

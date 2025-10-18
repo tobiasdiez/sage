@@ -1,0 +1,19 @@
+from typing import Any
+
+def permutation_iterator_transposition_list(n: Any) -> Any:
+    ...
+
+def map_to_list(l: Any, values: Any, n: Any) -> Any:
+    ...
+
+def left_action_same_n(S: Any, lp: Any) -> List[Any]:
+    ...
+
+def right_action_same_n(S: Any, rp: Any) -> List[Any]:
+    ...
+
+def left_action_product(S: Any, lp: Any) -> List[Any]:
+    ...
+
+def right_action_product(S: Any, rp: Any) -> List[Any]:
+    ...

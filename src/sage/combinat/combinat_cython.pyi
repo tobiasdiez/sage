@@ -1,0 +1,13 @@
+from typing import Any, Iterator, List
+
+def lyndon_word_iterator(n: int, k: int) -> Iterator[List[int]]:
+    ...
+
+def perfect_matchings_iterator(n: int) -> Iterator[List[Tuple[int, int]]]:
+    ...
+
+def set_partition_composition(sp1: List[List[int]], sp2: List[List[int]]) -> List[List[int]]:
+    ...
+
+def conjugate(p: List[int]) -> List[int]:
+    ...

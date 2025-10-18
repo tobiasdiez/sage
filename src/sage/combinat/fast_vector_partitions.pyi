@@ -1,0 +1,13 @@
+from typing import Any
+
+def recursive_within_from_to(m: Any, s: Any, e: Any, useS: Any, useE: Any) -> Any:
+    ...
+
+def within_from_to(m: Any, s: Any, e: Any) -> Any:
+    ...
+
+def recursive_vector_partitions(v: Any, vL: Any) -> Any:
+    ...
+
+def fast_vector_partitions(v: Any, min_vals: Any = ...) -> Any:
+    ...

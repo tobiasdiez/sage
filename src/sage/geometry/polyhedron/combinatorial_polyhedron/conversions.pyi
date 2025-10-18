@@ -1,0 +1,13 @@
+from typing import Any
+
+def incidence_matrix_to_bit_rep_of_facets(matrix: Any) -> Any:
+    ...
+
+def incidence_matrix_to_bit_rep_of_Vrep(matrix: Any) -> Any:
+    ...
+
+def facets_tuple_to_bit_rep_of_facets(facets_input: Any, n_Vrep: Any) -> Any:
+    ...
+
+def facets_tuple_to_bit_rep_of_Vrep(facets_input: Any, n_Vrep: Any) -> Any:
+    ...

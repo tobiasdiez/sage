@@ -1,0 +1,39 @@
+from typing import Any
+
+def matching_root(poly: Any, target: Any, ambient_field: Any = ..., margin: Any = ..., max_prec: Any = ...) -> Any:
+    ...
+
+def closest(target: Any, values: Any, margin: Any = ...) -> Any:
+    ...
+
+def root_from_approx(f: Any, a: Any) -> Any:
+    ...
+
+def create_embedding_from_approx(K: Any, gen_image: Any) -> Any:
+    ...
+
+class NumberFieldEmbedding(Morphism):
+    def __init__(self: Any, K: Any, R: Any, gen_embedding: Any) -> Any:
+        ...
+    def gen_image(self: Any) -> Any:
+        ...
+
+class EmbeddedNumberFieldMorphism(NumberFieldEmbedding):
+    def __init__(self: Any, K: Any, L: Any, ambient_field: Any = ...) -> Any:
+        ...
+    def section(self: Any) -> Any:
+        ...
+
+class EmbeddedNumberFieldConversion(Map):
+    def __init__(self: Any, K: Any, L: Any, ambient_field: Any = ...) -> Any:
+        ...
+
+class CyclotomicFieldEmbedding(NumberFieldEmbedding):
+    def __init__(self: Any, K: Any, L: Any) -> Any:
+        ...
+    def section(self: Any) -> Any:
+        ...
+
+class CyclotomicFieldConversion(Map):
+    def __init__(self: Any, K: Any, L: Any) -> Any:
+        ...

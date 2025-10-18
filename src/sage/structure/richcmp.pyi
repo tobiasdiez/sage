@@ -1,0 +1,13 @@
+from typing import Any
+
+def richcmp_item(x: Any, y: Any, op: Any) -> Any:
+    ...
+
+def richcmp_method(cls: Any) -> Any:
+    ...
+
+def richcmp_by_eq_and_lt(eq_attr: Any, lt_attr: Any) -> Any:
+    ...
+
+def richcmp(self: Any, other: Any, op: Any) -> Any:
+    ...

@@ -1,0 +1,16 @@
+from typing import Any
+
+def lower_bound(G: Any) -> Any:
+    ...
+
+def linear_ordering_to_path_decomposition(G: Any, L: Any) -> Any:
+    ...
+
+def vertex_separation_exp(G: Any, verbose: Any = ...) -> Any:
+    ...
+
+def is_valid_ordering(G: Any, L: Any) -> Any:
+    ...
+
+def width_of_path_decomposition(G: Any, L: Any) -> Any:
+    ...

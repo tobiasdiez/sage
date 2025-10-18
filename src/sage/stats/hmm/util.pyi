@@ -1,0 +1,9 @@
+from typing import Any
+
+class HMM_Util:
+    def normalize_probability_TimeSeries(self: Any, T: Any, i: Any, j: Any) -> Any:
+        ...
+    def initial_probs_to_TimeSeries(self: Any, pi: Any, normalize: Any) -> Any:
+        ...
+    def state_matrix_to_TimeSeries(self: Any, A: Any, N: Any, normalize: Any) -> Any:
+        ...

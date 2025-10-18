@@ -1,0 +1,16 @@
+from typing import Any
+
+class SectionFiniteFieldHomomorphism_prime(SectionFiniteFieldHomomorphism_generic):
+    ...
+
+class FiniteFieldHomomorphism_prime(FiniteFieldHomomorphism_generic):
+    def __init__(self: Any, parent: Any, im_gens: Any = ..., base_map: Any = ..., check: Any = ..., section_class: Any = ...) -> Any:
+        ...
+
+class FrobeniusEndomorphism_prime(FrobeniusEndomorphism_finite_field):
+    def __init__(self: Any, domain: Any, power: Any = ...) -> Any:
+        ...
+    def __pow__(self: Any, n: Any, modulus: Any) -> Any:
+        ...
+    def fixed_field(self: Any) -> Any:
+        ...

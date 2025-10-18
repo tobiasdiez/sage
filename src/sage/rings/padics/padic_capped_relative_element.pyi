@@ -1,0 +1,19 @@
+from typing import Any
+
+def unpickle_pcre_v1(R: Any, unit: Any, ordp: Any, relprec: Any) -> Any:
+    ...
+
+def base_p_list(n: Any, pos: Any, prime_pow: Any) -> Any:
+    ...
+
+class PowComputer_(PowComputer_base):
+    def __init__(self: Any, prime: Any, cache_limit: Any, prec_cap: Any, ram_prec_cap: Any, in_field: Any) -> Any:
+        ...
+
+class pAdicCappedRelativeElement(CRElement):
+    def lift(self: Any) -> Any:
+        ...
+    def __pari__(self: Any) -> Any:
+        ...
+    def residue(self: Any, absprec: Any = ..., field: Any = ..., check_prec: Any = ...) -> Any:
+        ...

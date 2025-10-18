@@ -1,0 +1,16 @@
+from typing import Any
+
+def red_mfact(a: Any, b: Any) -> Any:
+    ...
+
+def primitivize(v0: Any, v1: Any, v2: Any, p: Any) -> Any:
+    ...
+
+def evaluate(a: Any, b: Any, c: Any, r: Any, s: Any, t: Any, v: Any) -> Any:
+    ...
+
+def pseudorandom_primitive_zero_mod_p(a: Any, b: Any, c: Any, r: Any, s: Any, t: Any, p: Any) -> Any:
+    ...
+
+def extend(v: Any) -> Any:
+    ...

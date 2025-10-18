@@ -1,0 +1,13 @@
+from typing import Any
+
+def make_tree(atoms: Any, cliques: Any) -> Any:
+    ...
+
+def make_labelled_rooted_tree(atoms: Any, cliques: Any) -> Any:
+    ...
+
+def to_tree(i: Any, n: Any) -> Any:
+    ...
+
+def atoms_and_clique_separators(G: Any, tree: Any = ..., rooted_tree: Any = ..., separators: Any = ...) -> Any:
+    ...

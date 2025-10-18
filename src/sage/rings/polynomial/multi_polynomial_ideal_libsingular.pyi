@@ -1,0 +1,13 @@
+from typing import Any
+
+def kbase_libsingular(I: Any, degree: Any = ...) -> Any:
+    ...
+
+def std_libsingular(I: Any) -> Any:
+    ...
+
+def slimgb_libsingular(I: Any) -> Any:
+    ...
+
+def interred_libsingular(I: Any) -> Any:
+    ...
